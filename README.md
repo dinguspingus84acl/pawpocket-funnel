@@ -55,10 +55,10 @@ Cold traffic does not see the Funnel Switcher. It was shifting the page and leak
 
 On both product pages:
 
-1. VIP and Guest radios start **unselected**.
-2. VIP reveals a **separate, unchecked** recurring-consent box. The text names the renewal (`$29.99/mo` or `$19.99/mo`), the first billing date (today + 30 days), the descriptor `PAWPOCKETCLUB*MEMBER`, and the one-click cancel page.
-3. **Complete Order** writes a consent receipt to `sessionStorage` (plan, exact text, ISO time, receipt ID) and opens **View my order consent receipt**.
-4. Guest orders do not ask for recurring consent.
+1. The kit price is **$49.99**. Quantity defaults to 1.
+2. One **unchecked** checkbox adds optional VIP: club is $0.00 today, then `$29.99/mo` or `$19.99/mo`. Checking it also shows the VIP kit price of **$29.99**.
+3. The terms under the box name the renewal amount, the first billing date, `PAWPOCKETCLUB*MEMBER`, and the one-click cancel page, at 14px.
+4. **Pay now** writes that consent to `sessionStorage` and continues to add-ons. An unchecked box is a one-time kit with no recurring line.
 
 Nothing on this site charges a card. Hook the same screen to a processor when you are ready, and keep the consent payload. The footer line "Static demo checkout — no card is charged on this site" stays hidden unless the URL has `?demo=1`.
 
@@ -71,7 +71,7 @@ These stay as visible placeholders. Do not invent the missing numbers.
 - **[CONFIRM GUARANTEE TERMS]** — window, who pays return shipping, and whether an opened brush qualifies. Jack still has to confirm those before the guarantee is advertised. Do not put that sentence in an ad until the words are final.
 - **[CONFIRM HANDLING]** business days and **[CONFIRM SHIP WINDOW]**
 - Specs: **[CONFIRM battery/run time]** and **[CONFIRM size]**
-- **[CONFIRM SLA]** and **[INSERT LOCAL ER EXAM FEE + SOURCE]** on the journal comparison
+- **[CONFIRM SLA]** and **[INSERT LOCAL ER EXAM FEE + SOURCE]** stay unused until a sourced comparison is allowed back on the journal
 - **[CONFIRM: reminder email wired]** on the day-25 step. Do not promise the reminder email until the billing backend actually sends it.
 - **[CONFIRM: you keep access until the end of the period you already paid for.]**
 - **[INSERT REAL CUSTOMER STORY]** — three empty cards on checkout. No stars and no counts.

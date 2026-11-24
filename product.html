@@ -4,13 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calm & Safe Kit | PawPocket Club</title>
-<meta name="description" content="VIP or Guest checkout for the Calm and Safe Kit. Neither plan is pre-selected. Recurring consent is a separate unchecked box.">
+<meta name="description" content="The Calm and Safe Kit is $49.99. Optional VIP club is an unchecked add-on at checkout.">
 <meta name="theme-color" content="#1B4332">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/styles.css">
 <link rel="preload" as="image" href="img/kit-hero.webp" type="image/webp" fetchpriority="high">
-
 </head>
 <body data-version="a" data-page="product" data-root="" class="has-sticky">
 <div class="topbar"><a href="club.html">VIP benefits →</a><span aria-hidden="true">·</span><a href="cancel.html">Cancel membership in 1 click ↗</a></div>
@@ -22,18 +21,11 @@
           <a href="cancel.html">Cancel</a></nav>
 </header>
 <main id="main">
-
 <section class="wrap hero">
   <p class="kicker">Calm &amp; Safe Kit</p>
   <div class="rating-slot" data-real-reviews hidden></div>
-  <h1 data-headline>Your Dog Just Ate Something. It's 11 PM. Who Do You Call?</h1>
-  <ul class="hero-checks">
-    <li>✓ Steam brush: shedding ends up in the brush, not on your couch</li>
-    <li>✓ Suction lick mat: bath time with a job</li>
-    <li>✓ Battery-free QR/NFC tag: any phone camera opens your contact + med profile (no GPS)</li>
-    <li>✓ 24/7 licensed veterinary guidance, triage, and second opinions</li>
-  </ul>
-  <p class="lede" data-subhead>Get the Calm &amp; Safe Kit for $29.99 with VIP ($20 less than Guest) plus 30 days of 24/7 licensed veterinary guidance, triage, and second opinions. Then $29.99/mo. Cancel in 1 click.</p>
+  <h1 data-headline>The Kit That Lives by the Front Door.</h1>
+  <p class="lede" data-subhead>Steam brush, suction lick mat, battery-free QR/NFC tag. $49.99. Optional VIP perks at checkout.</p>
 </section>
 <section class="wrap product-layout">
   <div data-gallery>
@@ -46,21 +38,15 @@
     </div>
   </div>
   <form id="checkout-form" class="buy-box" data-checkout autocomplete="off" novalidate>
-    <h2>Choose VIP or Guest</h2>
-    <table class="offer-table">
-      <thead><tr><th></th><th>VIP</th><th>Guest</th></tr></thead>
-      <tbody>
-        <tr><th>Due today</th><td><strong>$29.99</strong></td><td>$49.99</td></tr>
-        <tr><th>Calm &amp; Safe Kit</th><td>✓</td><td>✓</td></tr>
-        <tr><th>24/7 licensed veterinary guidance, triage, and second opinions</th><td>✓</td><td>—</td></tr>
-        <tr><th>Veterinary discount plan at participating clinics</th><td>✓</td><td>—</td></tr>
-        <tr><th>Wallet Pet ID + QR scan alerts</th><td>✓</td><td>—</td></tr>
-        <tr><th>Covers up to 3 pets</th><td>✓</td><td>—</td></tr>
-        <tr><th>After 30 days</th><td>$29.99/mo until you cancel</td><td>Nothing renews</td></tr>
-        <tr><th>Cancel</th><td>1 click, no login, no phone call</td><td>n/a</td></tr>
-      </tbody>
-    </table>
-    <p class="fine">VIP is $20 less today because the club continues after 30 days. Nothing is selected. You choose.</p>
+    <p class="kicker">Order the kit</p>
+    <p class="price-hero" id="display-price">$49.99</p>
+    <p class="fine" id="price-caption">Kit price</p>
+    <p id="vip-price-line" hidden>VIP price <strong>$29.99</strong>. Regular kit price is $49.99.</p>
+    <ul class="hero-checks">
+      <li>✓ Steam brush: shedding ends up in the brush, not on your couch</li>
+      <li>✓ Suction lick mat: bath time with a job</li>
+      <li>✓ Battery-free QR/NFC tag: any phone camera opens your contact + med profile (no GPS)</li>
+    </ul>
     <fieldset class="qty-stack">
       <legend>How many kits?</legend>
       <label class="qty-option"><input type="radio" name="kit-qty" value="1" checked> 1 kit (1 dog)</label>
@@ -69,70 +55,44 @@
       <label class="qty-option"><input type="radio" name="kit-qty" value="3"> 3 kits (3 dogs) +$39.98</label>
       <p class="fine qty-note">Best value per dog: one membership covers up to 3 pets</p>
     </fieldset>
-    <fieldset class="plan-stack">
-      <legend class="sr-only">Plan</legend>
-      <label class="plan-card plan-vip">
-        <input type="radio" name="plan" value="vip">
-        <span>
-          <span class="plan-kicker">$20 less today</span>
-          <span class="plan-name">VIP</span>
-          <span class="plan-price">$29.99 <small>today</small></span>
-          <span class="plan-save">Same kit as Guest. Club continues at $29.99/mo.</span>
-          <span class="plan-detail">30 days of PawPocket Club included. Then $29.99/mo unless you cancel in one click. 24/7 licensed veterinary guidance, triage, and second opinions. A veterinary discount plan at participating clinics once B2B agreements are in place.</span>
-        </span>
-      </label>
-      <label class="plan-card">
-        <input type="radio" name="plan" value="guest">
-        <span>
-          <span class="plan-name">Guest</span>
-          <span class="plan-price">$49.99 <small>one time</small></span>
-          <span class="plan-detail">The Calm &amp; Safe Kit only. No membership and no renewal.</span>
-        </span>
-      </label>
-    </fieldset>
-    <dl class="due">
-      <div><dt>Selected plan</dt><dd id="due-plan">None yet</dd></div>
-      <div><dt>Due today</dt><dd id="due-today">—</dd></div>
-      <div><dt>Renews</dt><dd id="due-renew">Choose VIP or Guest</dd></div>
+    <h2>Order summary</h2>
+    <dl class="due" id="order-summary">
+      <div><dt id="sum-kit-label">Calm &amp; Safe Kit</dt><dd id="sum-kit-price">$49.99</dd></div>
+      <div id="sum-extra" hidden><dt id="sum-extra-label">Extra kits</dt><dd id="sum-extra-price">$0.00</dd></div>
+      <div id="sum-vip" hidden><dt>VIP Club (30-day free trial)</dt><dd>$0.00 today</dd></div>
+      <div><dt>Due today</dt><dd id="due-today">$49.99</dd></div>
+      <div><dt>Renews</dt><dd id="due-renew">Nothing. One-time kit purchase.</dd></div>
       <div><dt>FREE bonus</dt><dd>Printable Fridge Emergency Card + Wallet Pet ID: $0.00</dd></div>
     </dl>
-    <ol class="join-timeline" aria-label="How you join and when you are charged">
-      <li><strong>① Today:</strong> $29.99. Your kit ships and the club unlocks.</li>
-      <li><strong>② Day 25:</strong> We email you a reminder that renewal is coming, with your 1-click cancel link. [CONFIRM: reminder email wired]</li>
-      <li><strong>③ <span data-renewal-label>30 days from today</span>:</strong> <span data-renewal-price>$29.99/mo</span> begins. Billed as PAWPOCKETCLUB*MEMBER. Cancel any time before then in 1 click.</li>
-    </ol>
-    <aside id="plain-terms" class="plain-terms" hidden>
-      <h3>Your membership, in writing</h3>
-      <dl>
-        <div><dt>Price</dt><dd data-renewal-price>$29.99/mo</dd></div>
-        <div><dt>First renewal</dt><dd data-renewal-short>30 days from today</dd></div>
-        <div><dt>Billed</dt><dd>every month until you cancel (calendar month, never every 28 days)</dd></div>
-        <div><dt>Statement</dt><dd>PAWPOCKETCLUB*MEMBER</dd></div>
-        <div><dt>Renewals ship</dt><dd>nothing (shipping on renewals is $0)</dd></div>
-        <div><dt>Cancel</dt><dd>1 click at <a href="cancel.html">cancel.html</a>. No login, no phone call, no survey</dd></div>
-      </dl>
-    </aside>
-    <div id="consent-panel" class="consent-panel" hidden>
-      <div class="consent-row">
-        <input type="checkbox" id="consent-check" name="recurring-consent" aria-labelledby="consent-copy">
-        <div id="consent-copy" class="consent-copy"></div>
-      </div>
-    </div>
     <p id="checkout-error" class="form-error" role="alert" hidden></p>
     <label class="field">Email for the receipt
       <input type="email" id="order-email" name="email" autocomplete="email" placeholder="you@example.com">
     </label>
     <div class="express" id="express-pay">
-      <p class="fine">Shop Pay, Apple Pay, and Google Pay stay off until a plan is chosen, and VIP still has to check the renewal box.</p>
+      <p class="fine">Shop Pay, Apple Pay, and Google Pay.</p>
       <p class="fine demo-only" hidden>They do not charge a card on this page.</p>
       <div class="express-row">
-        <button type="button" class="btn btn-express" data-express disabled>Shop Pay</button>
-        <button type="button" class="btn btn-express" data-express disabled>Apple Pay</button>
-        <button type="button" class="btn btn-express" data-express disabled>Google Pay</button>
+        <button type="button" class="btn btn-express" data-express>Shop Pay</button>
+        <button type="button" class="btn btn-express" data-express>Apple Pay</button>
+        <button type="button" class="btn btn-express" data-express>Google Pay</button>
       </div>
     </div>
-    <button type="submit" class="btn btn-cta btn-block">Complete Order</button>
+    <div class="vip-addon">
+      <label class="vip-addon-row">
+        <input type="checkbox" id="vip-addon" name="vip-addon">
+        <span>Add PawPocket VIP Club — first 30 days free, then $29.99/mo. Cancel anytime in 1 click. <a href="club.html">See perks</a></span>
+      </label>
+      <ul class="vip-perks">
+        <li>24/7 licensed veterinary guidance, triage, and second opinions</li>
+        <li>Veterinary discount plan at participating clinics</li>
+        <li>Wallet Pet ID and QR scan alerts (no GPS)</li>
+        <li>Up to 3 pets</li>
+      </ul>
+      <p class="vip-terms" id="vip-terms">VIP Club is $0.00 today, then $29.99/mo beginning 30 days from today, billed as PAWPOCKETCLUB*MEMBER. Cancel in 1 click at <a href="cancel.html">cancel.html</a>.</p>
+    </div>
+    <button type="submit" class="btn btn-cta btn-block">Pay now</button>
     <p class="guarantee-pill">🛡️ [CONFIRM GUARANTEE TERMS] 30-Day Kit-Back Guarantee: hate the kit, send it back for a full refund of today's kit price.</p>
+
     <div class="trust-row">
       <svg class="pay-mark" viewBox="0 0 48 32" role="img" aria-label="Visa"><rect width="48" height="32" rx="4" fill="#1a1f71"/><text x="24" y="21" text-anchor="middle" fill="#fff" font-size="12" font-family="Arial, sans-serif" font-weight="700">VISA</text></svg>
       <svg class="pay-mark" viewBox="0 0 48 32" role="img" aria-label="Mastercard"><rect width="48" height="32" rx="4" fill="#fff" stroke="#e4ddd4"/><circle cx="20" cy="16" r="8" fill="#eb001b"/><circle cx="28" cy="16" r="8" fill="#f79e1b"/></svg>
@@ -143,7 +103,6 @@
       <span class="trust-label">Secure checkout</span>
     </div>
     <p class="delivery-strip" id="delivery-strip">📦 Ordered: Today → 🚚 Ships: +[CONFIRM HANDLING] business days → 🏠 Arrives: [CONFIRM SHIP WINDOW]</p>
-    <button type="button" class="btn btn-ghost btn-block" id="open-log">View my order consent receipt</button>
     <p class="disclosure">PawPocket Club is a wellness membership. It is not insurance and it does not pay claims.</p>
     <p class="disclosure demo-only" hidden>This page records consent in this browser only. It does not charge a card.</p>
   </form>
@@ -151,23 +110,22 @@
 <section class="wrap section">
   <h2>How it works</h2>
   <ol class="how-steps">
-    <li><strong>1. Pick VIP or Guest.</strong></li>
-    <li><strong>2. Your kit ships, and the club unlocks today.</strong></li>
-    <li><strong>3. Brush, bathe, tag.</strong> Get 24/7 licensed veterinary guidance, triage, and second opinions when something feels off.</li>
+    <li><strong>1. Pick how many kits.</strong> One is the default.</li>
+    <li><strong>2. Pay for the kit.</strong> It ships. The optional VIP box stays empty unless you check it.</li>
+    <li><strong>3. Brush, bathe, tag. The tools are the product. Optional VIP perks are a checkbox, off until you turn them on.</strong></li>
   </ol>
   <p><a class="btn btn-cta" href="#checkout-form">Get the Kit →</a></p>
 </section>
 <section class="wrap section">
-  <h2>The objections, answered</h2>
-  <details class="faq"><summary>Is the $29.99/mo a recurring charge?</summary><p>Yes, if you choose VIP. Today's $29.99 covers the kit and your first 30 days. After that it's $29.99/mo on the date shown at checkout, billed as PAWPOCKETCLUB*MEMBER, until you cancel in 1 click. Guest is $49.99 once and never renews.</p></details>
-  <details class="faq"><summary>Why is VIP cheaper today than Guest?</summary><p>Guest is $49.99 for the kit and then nothing. VIP is $29.99 today for the same kit plus 30 days of PawPocket Club, and then $29.99/mo until you cancel. The $20 gap is the membership, not a crossed-out retail price. The renewal box is separate and it starts unchecked.</p></details>
-  <details class="faq"><summary>What if I want the kit back?</summary><p>[CONFIRM GUARANTEE TERMS] Use the brush, the mat and the tag for 30 days. If the kit isn't worth it, send it back for a full refund of today's kit price. Membership months already used are billed separately, and you can cancel the membership in 1 click any time.</p></details>
-  <details class="faq"><summary>Is this insurance?</summary><p>No. PawPocket Club is a wellness membership. It does not pay claims and it is not a reimbursement fund.</p></details>
-  <details class="faq"><summary>Will a veterinarian prescribe online?</summary><p>No. Veterinary access is 24/7 licensed veterinary guidance, triage, and second opinions. It is not an online prescription service and it is not a legal diagnosis where a state veterinary-client-patient relationship bars that.</p></details>
+  <h2>Questions, answered</h2>
+  <details class="faq"><summary>What does $49.99 buy?</summary><p>The Calm &amp; Safe Kit, once. A steam deshedding brush, a suction lick mat, and a battery-free QR/NFC collar tag. Nothing renews unless you check the optional VIP box.</p></details>
+  <details class="faq"><summary>What if I check the VIP box?</summary><p>Only if you check Add PawPocket VIP Club. The club is $0.00 today, then $29.99/mo on the date in the terms, billed as PAWPOCKETCLUB*MEMBER, until you cancel in 1 click. Leave the box empty and the kit is $49.99 once, with nothing renewing. Checking it also changes today's kit to the VIP price of $29.99.</p></details>
+  <details class="faq"><summary>What if I want the kit back?</summary><p>[CONFIRM GUARANTEE TERMS] Use the brush, the mat and the tag for 30 days. If the kit isn't worth it, send it back for a full refund of today's kit price. Club months already used, if you added VIP, are billed separately, and you can cancel that add-on in 1 click any time.</p></details>
+  <details class="faq"><summary>Is this insurance?</summary><p>No. PawPocket Club is a wellness membership. It is not insurance and it does not pay claims. It does not pay claims and it is not a reimbursement fund.</p></details>
+  <details class="faq"><summary>Will a veterinarian prescribe online?</summary><p>No. If you add VIP, veterinary access is 24/7 licensed veterinary guidance, triage, and second opinions. It is not an online prescription service and it is not a legal diagnosis where a state veterinary-client-patient relationship bars that.</p></details>
   <details class="faq"><summary>Does the collar tag use GPS?</summary><p>No. It is a battery-free QR/NFC smart collar tag. Any smartphone camera opens the pet's emergency contact and med profile. There is no GPS radio and no tracking subscription in the tag.</p></details>
-  <details class="faq"><summary>When would I be billed again?</summary><p>Only if you choose VIP and leave the membership on. The first renewal is 30 days after today at $29.99/mo, descriptor PAWPOCKETCLUB*MEMBER. Guest is $49.99 once and does not renew. The date is written into the consent line before you can finish a VIP order.</p></details>
-  <details class="faq"><summary>How do I cancel?</summary><p>One click at <a href="cancel.html">cancel.html</a>. The Cancel Membership Immediately button is on the page the whole time. Pause, downgrade, and annual are optional and do not block it.</p></details>
-  <details class="faq"><summary>What actually ships?</summary><p>The physical kit ships once. Renewals are the membership, so shipping on renewals is $0.</p></details>
+  <details class="faq"><summary>How do I cancel VIP?</summary><p>One click at <a href="cancel.html">cancel.html</a>. Cancel Membership Immediately stays on that screen. You only need it if you checked the add-on.</p></details>
+  <details class="faq"><summary>What actually ships?</summary><p>The physical kit ships once. If you add VIP, renewals are the optional club, so shipping on those renewals is $0.</p></details>
 </section>
 <section class="wrap section" id="stories">
   <h2>Owner stories</h2>
@@ -179,14 +137,11 @@
   </div>
   <p class="repeat-cta"><a class="btn btn-cta" href="#checkout-form">Get the Calm &amp; Safe Kit →</a></p>
 </section>
-<section class="wrap section">
-  <aside class="callout"><strong>$0 shipping on renewals.</strong> The Calm &amp; Safe Kit ships once. Monthly PawPocket Club renewals are the membership, not another box, so renewal shipping is $0.</aside>
-</section>
 <section class="wrap section tabs" data-tabs>
-  <div role="tablist" aria-label="Kit and club">
+  <div role="tablist" aria-label="Kit details">
     <button type="button" role="tab" aria-selected="true" aria-controls="panel-box" id="tab-box">What's in the Box</button>
-    <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="panel-club" id="tab-club">What's in the Club</button>
     <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="panel-specs" id="tab-specs">Specs</button>
+    <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="panel-club" id="tab-club">Optional VIP perks</button>
   </div>
   <div role="tabpanel" id="panel-box" aria-labelledby="tab-box">
     <ul class="perk-list">
@@ -195,61 +150,47 @@
       <li><strong>QR/NFC smart collar tag.</strong> Battery-free. Any smartphone camera opens the emergency contact and med profile. No GPS.</li>
     </ul>
   </div>
-  <div role="tabpanel" id="panel-club" aria-labelledby="tab-club" hidden>
-          <h3>What's in the club</h3>
-          <ul class="perk-list">
-            <li>24/7 licensed veterinary guidance, triage, and second opinions. Not an online prescription. Not a legal diagnosis where a state VCPR does not allow one.</li>
-            <li>A veterinary discount plan at participating clinics. Not insurance, and not a reimbursement fund.</li>
-            <li>Wallet Pet ID you build on the thank-you page and keep on your phone.</li>
-            <li>QR scan alerts when someone opens the tag page. The tag itself is battery-free and has no GPS.</li>
-            <li>Med profile stored for the tag: allergies and medications you type in.</li>
-            <li>One membership covers up to 3 pets.</li>
-          </ul>
-          <figure class="figure">
-            <picture><source srcset="img/vet-clinic-happy.webp" type="image/webp"><img src="img/vet-clinic-happy.jpg" width="1152" height="864" alt="A veterinarian in green scrubs examines a golden retriever on a table while the owner stands beside them." decoding="async"></picture>
-            <figcaption>The clinic side of Version A is a discount plan at participating clinics after B2B agreements exist.</figcaption>
-          </figure>
-          <!-- This page does not place a call. -->
-          <p>Those veterinary services depend on signed clinic partners.</p>
-          <!-- This static checkout does not connect you to a veterinarian. -->
-    <p>Renewals of the club are $29.99/mo. Shipping on those renewals is $0.</p>
-  </div>
   <div role="tabpanel" id="panel-specs" aria-labelledby="tab-specs" hidden>
     <table class="specs-table">
       <tbody>
         <tr><th>Steam brush</th><td>USB-C rechargeable · [CONFIRM battery/run time]</td></tr>
         <tr><th>Lick mat</th><td>Food-grade silicone · suction-cup back · [CONFIRM size]</td></tr>
         <tr><th>Collar tag</th><td>QR + NFC · battery-free · no GPS · works with any smartphone camera</td></tr>
-        <tr><th>Covers</th><td>Up to 3 pets per membership</td></tr>
-        <tr><th>Renewals</th><td>Membership only, nothing ships, $0 shipping</td></tr>
+        <tr><th>Covers</th><td>Up to 3 pets if you add VIP</td></tr>
+        <tr><th>Renewals</th><td>Only if you add VIP. Nothing ships, $0 shipping</td></tr>
       </tbody>
     </table>
   </div>
+  <div role="tabpanel" id="panel-club" aria-labelledby="tab-club" hidden>
+    <h3>Optional add-on, off until you check it</h3>
+    <ul class="perk-list">
+        <li>24/7 licensed veterinary guidance, triage, and second opinions</li>
+        <li>Veterinary discount plan at participating clinics</li>
+        <li>Wallet Pet ID and QR scan alerts (no GPS)</li>
+        <li>Up to 3 pets</li>
+    </ul>
+    
+          <figure class="figure">
+            <picture><source srcset="img/vet-clinic-happy.webp" type="image/webp"><img src="img/vet-clinic-happy.jpg" width="1152" height="864" alt="A veterinarian in green scrubs examines a golden retriever on a table while the owner stands beside them." decoding="async"></picture>
+            <figcaption>Optional Version A perk: a discount plan at participating clinics after B2B agreements exist.</figcaption>
+          </figure>
+          <!-- This page does not place a call. -->
+          <p>Those veterinary services depend on signed clinic partners.</p>
+          <!-- This static checkout does not connect you to a veterinarian. -->
+    <p>The club renews at $29.99/mo after 30 days if you leave it on. Shipping on those renewals is $0. <a href="club.html">See perks</a>.</p>
+  </div>
   <p class="repeat-cta"><a class="btn btn-cta" href="#checkout-form">Get the Calm &amp; Safe Kit →</a></p>
 </section>
-
 <section class="wrap section">
   <aside class="guarantee">
     <!-- Jack still has to confirm the window, who pays return shipping, and whether an opened brush qualifies. Do not put this sentence in an ad until those words are final. -->
     <p class="kicker">Risk reversal</p>
     <h2>Try It for 30 Days. If It Doesn't Earn Its Spot by the Door, Send It Back.</h2>
-    <p>[CONFIRM GUARANTEE TERMS] Use the brush, the mat and the tag for 30 days. If the kit isn't worth it, send it back for a full refund of today's kit price. Membership months already used are billed separately, and you can cancel the membership in 1 click any time.</p>
+    <p>[CONFIRM GUARANTEE TERMS] Use the brush, the mat and the tag for 30 days. If the kit isn't worth it, send it back for a full refund of today's kit price. Club months already used, if you added the optional VIP, are billed separately, and you can cancel that add-on in 1 click any time.</p>
   </aside>
   <p class="repeat-cta"><a class="btn btn-cta" href="#checkout-form">Get the Calm &amp; Safe Kit →</a></p>
 </section>
-<div id="log-drawer" class="drawer" hidden>
-  <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="log-title">
-    <h2 id="log-title" tabindex="-1">Order consent receipt</h2>
-    <p>Written in this browser when Complete Order is clicked. Plan, exact consent text, ISO timestamp, and receipt ID.</p>
-    <div id="log-body"></div>
-    <div class="btn-row">
-      <button type="button" class="btn btn-cta" id="log-continue" hidden>Continue to add-ons</button>
-      <button type="button" class="btn btn-ghost" data-close-log>Close</button>
-    </div>
-  </div>
-</div>
-<a class="sticky-cta" href="#checkout-form"><span><strong>Calm &amp; Safe Kit: $29.99 with VIP</strong><span>or $49.99 once as Guest · you choose</span></span><span class="btn">Choose plan ↓</span></a>
-
+<a class="sticky-cta" href="#checkout-form"><span><strong>Calm &amp; Safe Kit</strong><span id="sticky-price">$49.99</span></span><span class="btn">Get the Kit ↓</span></a>
 </main>
 <footer class="site-footer"><div class="wrap footer-grid">
           <div><strong>PawPocket Club</strong>
@@ -259,8 +200,8 @@
           <nav class="footer-nav" aria-label="Footer">
             <a href="advertorial.html">Journal</a>
             <a href="listicle.html">5 reasons</a>
-            <a href="product.html">Checkout</a>
-            <a href="club.html">VIP benefits</a>
+            <a href="product.html">The kit</a>
+            <a href="club.html">VIP perks</a>
             <a href="upsell.html">Add-ons</a>
             <a href="cancel.html">Cancel membership</a>
           </nav>

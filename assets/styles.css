@@ -761,6 +761,44 @@ details.faq p:last-child { margin-bottom: 0; }
 
 .guarantee-pill { background: var(--sage-soft); border-radius: 14px; padding: 10px 12px; margin: 0; font-weight: 650; }
 
+.price-hero {
+  font-family: var(--serif);
+  font-weight: 680;
+  font-size: clamp(2.6rem, 6vw, 3.4rem);
+  letter-spacing: -0.03em;
+  margin: 0;
+  line-height: 1;
+  color: var(--forest-deep);
+}
+.vip-addon {
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  background: #f7f4ef;
+}
+.vip-addon:has(input:checked) {
+  border-color: var(--forest);
+  background: #f3f7f4;
+}
+.vip-addon-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  font-weight: 650;
+}
+.vip-perks {
+  margin: 8px 0 0 28px;
+  padding: 0;
+  font-size: 0.92rem;
+}
+.vip-terms {
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 10px 0 0;
+  color: var(--ink);
+}
+
 .trust-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .pay-mark { width: 48px; height: 32px; flex: none; }
 .trust-label { font-weight: 800; font-size: 0.92rem; }

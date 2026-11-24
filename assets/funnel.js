@@ -183,17 +183,20 @@
   }
 
   function consentParts(version, whenLabel) {
+    var renewal = money(version.renewal) + "/mo";
+    var kit = money(version.vipToday);
+    var before = "VIP Club is $0.00 today, then " + renewal + " beginning " + whenLabel + ", billed as " + DESCRIPTOR + ". The kit today is the VIP price of " + kit + " plus any extra kits. Cancel in 1 click any time before that date at ";
     if (version.id === "a") {
       return {
-        before: "I agree that today's $29.99 charge is for the Calm & Safe Kit and includes 30 days of PawPocket Club. The membership then renews at $29.99/mo beginning " + whenLabel + ". Recurring charges appear on my statement as " + DESCRIPTOR + ". I can cancel in one click any time before that date at ",
+        before: before,
         link: version.cancelPath,
         after: ". PawPocket Club is a wellness membership. It is not insurance and it does not pay claims."
       };
     }
     return {
-      before: "I agree that today's $29.99 charge is for the Calm & Safe Kit and includes 30 days of PawPocket Digital Club on Whop. The membership then renews at $19.99/mo beginning " + whenLabel + ". Recurring charges appear on my statement as " + DESCRIPTOR + ". I can cancel in one click any time before that date at ",
+      before: before,
       link: version.cancelPath,
-      after: ". PawPocket Digital Club is a wellness membership. It is not insurance and it does not pay claims. The helper inside this club is AI educational guidance only — not a licensed veterinarian, diagnosis, or emergency replacement."
+      after: ". PawPocket Digital Club is a wellness membership. It is not insurance and it does not pay claims. The helper is AI educational guidance only — not a licensed veterinarian, diagnosis, or emergency replacement."
     };
   }
 
@@ -290,15 +293,21 @@
     var version = cfg();
     if (!form || !version) return;
 
-    var radios = Array.prototype.slice.call(form.querySelectorAll('input[name="plan"]'));
-    var consent = document.getElementById("consent-check");
-    var panel = document.getElementById("consent-panel");
-    var copy = document.getElementById("consent-copy");
+    var vipBox = document.getElementById("vip-addon");
+    var termsEl = document.getElementById("vip-terms");
     var error = document.getElementById("checkout-error");
-    var duePlan = document.getElementById("due-plan");
     var dueToday = document.getElementById("due-today");
     var dueRenew = document.getElementById("due-renew");
-    var terms = document.getElementById("plain-terms");
+    var sumKitLabel = document.getElementById("sum-kit-label");
+    var sumKitPrice = document.getElementById("sum-kit-price");
+    var sumExtra = document.getElementById("sum-extra");
+    var sumExtraLabel = document.getElementById("sum-extra-label");
+    var sumExtraPrice = document.getElementById("sum-extra-price");
+    var sumVip = document.getElementById("sum-vip");
+    var displayPrice = document.getElementById("display-price");
+    var priceCaption = document.getElementById("price-caption");
+    var vipPriceLine = document.getElementById("vip-price-line");
+    var stickyPrice = document.getElementById("sticky-price");
     var first = addDays(30);
     var whenLabel = formatLong(first);
     var parts = consentParts(version, whenLabel);
@@ -310,112 +319,87 @@
       return n;
     }
 
-    function dueFor(plan) {
-      var base = plan === "vip" ? version.vipToday : version.guestToday;
-      return Math.round((base + version.extraKit * (kitQty() - 1)) * 100) / 100;
+    function vipOn() {
+      return !!(vipBox && vipBox.checked);
     }
 
-    function refreshDue() {
-      var selected = form.querySelector('input[name="plan"]:checked');
-      if (!selected) {
-        if (duePlan) duePlan.textContent = "None yet";
-        if (dueToday) dueToday.textContent = "—";
-        if (dueRenew) dueRenew.textContent = "Choose VIP or Guest";
-        return;
-      }
-      var qLabel = kitQty() > 1 ? " · " + kitQty() + " kits" : "";
-      if (selected.value === "vip") {
-        duePlan.textContent = "VIP" + qLabel;
-        dueToday.textContent = money(dueFor("vip"));
-        dueRenew.textContent = money(version.renewal) + "/mo starting " + whenLabel;
-      } else {
-        duePlan.textContent = "Guest" + qLabel;
-        dueToday.textContent = money(dueFor("guest"));
-        dueRenew.textContent = "No renewal. One-time kit purchase.";
-      }
+    function extraAmount() {
+      return Math.round(version.extraKit * (kitQty() - 1) * 100) / 100;
     }
 
-    function renderConsent() {
-      copy.textContent = "";
-      copy.appendChild(document.createTextNode(parts.before));
+    function kitBase() {
+      return vipOn() ? version.vipToday : version.guestToday;
+    }
+
+    function dueNow() {
+      return Math.round((kitBase() + extraAmount()) * 100) / 100;
+    }
+
+    function renderTerms() {
+      if (!termsEl) return;
+      termsEl.textContent = "";
+      termsEl.appendChild(document.createTextNode(parts.before));
       var a = document.createElement("a");
       a.href = parts.link;
       a.textContent = parts.link;
-      copy.appendChild(a);
-      copy.appendChild(document.createTextNode(parts.after));
+      termsEl.appendChild(a);
+      termsEl.appendChild(document.createTextNode(parts.after));
     }
 
     function exactConsentText() {
-      return copy.innerText.replace(/\s+/g, " ").trim();
+      return termsEl ? termsEl.innerText.replace(/\s+/g, " ").trim() : "";
     }
 
-    function clearError() {
-      error.hidden = true;
-      error.textContent = "";
+    function syncExpress() {
+      form.querySelectorAll("[data-express]").forEach(function (btn) {
+        btn.disabled = false;
+      });
     }
 
-    function showError(msg) {
-      error.hidden = false;
-      error.textContent = msg;
-    }
-
-    function resetPlans() {
-      radios.forEach(function (r) { r.checked = false; });
-      if (consent) consent.checked = false;
-      if (panel) panel.hidden = true;
-      if (terms) terms.hidden = true;
-      clearError();
-      refreshDue();
+    function refreshDue() {
+      var qty = kitQty();
+      var on = vipOn();
+      var extra = extraAmount();
+      if (sumKitLabel) sumKitLabel.textContent = on ? "Calm & Safe Kit (VIP price)" : "Calm & Safe Kit";
+      if (sumKitPrice) sumKitPrice.textContent = money(kitBase());
+      if (sumExtra) {
+        sumExtra.hidden = qty < 2;
+        if (sumExtraLabel) sumExtraLabel.textContent = (qty - 1) + " extra kit" + (qty > 2 ? "s" : "");
+        if (sumExtraPrice) sumExtraPrice.textContent = money(extra);
+      }
+      if (sumVip) sumVip.hidden = !on;
+      if (dueToday) dueToday.textContent = money(dueNow());
+      if (dueRenew) {
+        dueRenew.textContent = on
+          ? money(version.renewal) + "/mo starting " + whenLabel
+          : "Nothing. One-time kit purchase.";
+      }
+      if (displayPrice) displayPrice.textContent = money(on ? version.vipToday : version.guestToday);
+      if (priceCaption) priceCaption.textContent = on ? "VIP price" : "Kit price";
+      if (vipPriceLine) vipPriceLine.hidden = !on;
+      if (stickyPrice) stickyPrice.textContent = on ? ("VIP price " + money(version.vipToday)) : money(version.guestToday);
       syncExpress();
     }
 
-    renderConsent();
-    resetPlans();
-    window.addEventListener("pageshow", function (event) {
-      if (event.persisted) resetPlans();
-    });
-
-    function openLog(forceContinue) {
-      var drawer = document.getElementById("log-drawer");
-      var body = document.getElementById("log-body");
-      var cont = document.getElementById("log-continue");
-      var log = readJSON(version.logKey) || [];
-      body.textContent = "";
-      if (!log.length) {
-        var p = document.createElement("p");
-        p.textContent = "No consent captured yet. Complete a VIP or Guest order on this page. The exact text, ISO timestamp, and receipt ID will land here.";
-        body.appendChild(p);
-      } else {
-        log.slice().reverse().forEach(function (entry) {
-          body.appendChild(renderLogEntry(entry));
-        });
+    function resetVip() {
+      if (vipBox) vipBox.checked = false;
+      if (error) {
+        error.hidden = true;
+        error.textContent = "";
       }
-      if (cont) {
-        cont.hidden = !(forceContinue || log.length);
-        cont.onclick = function () { window.location.href = version.upsellPath; };
-      }
-      drawer.hidden = false;
-      var heading = document.getElementById("log-title");
-      if (heading) heading.focus();
+      refreshDue();
     }
 
-    radios.forEach(function (radio) {
-      radio.addEventListener("change", function () {
-        clearError();
-        var vip = radio.value === "vip" && radio.checked;
-        panel.hidden = !vip;
-        if (terms) terms.hidden = !vip;
-        if (!vip && consent) consent.checked = false;
-        refreshDue();
-        syncExpress();
-      });
+    renderTerms();
+    resetVip();
+    window.addEventListener("pageshow", function (event) {
+      if (event.persisted) resetVip();
     });
+
+    if (vipBox) vipBox.addEventListener("change", refreshDue);
     form.querySelectorAll('input[name="kit-qty"]').forEach(function (qty) {
-      qty.addEventListener("change", function () {
-        refreshDue();
-      });
+      qty.addEventListener("change", refreshDue);
     });
-    if (consent) consent.addEventListener("change", syncExpress);
     form.querySelectorAll("[data-express]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         if (btn.disabled) return;
@@ -423,32 +407,15 @@
         else form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
       });
     });
-    function syncExpress() {
-      var selected = form.querySelector('input[name="plan"]:checked');
-      var ready = !!(selected && (selected.value === "guest" || (consent && consent.checked)));
-      form.querySelectorAll("[data-express]").forEach(function (btn) {
-        btn.disabled = !ready;
-      });
-    }
-    syncExpress();
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var selected = form.querySelector('input[name="plan"]:checked');
-      if (!selected) {
-        showError("Choose VIP or Guest before checkout.");
-        if (radios[0]) radios[0].focus();
-        return;
-      }
-      if (selected.value === "vip" && !consent.checked) {
-        showError("VIP renews automatically. Check the separate recurring-billing box — it starts unchecked — or choose Guest for a one-time kit.");
-        consent.focus();
-        return;
-      }
-
+      var on = vipOn();
       var now = new Date().toISOString();
       var emailInput = document.getElementById("order-email");
-      var entry = selected.value === "vip"
+      var qtyNow = kitQty();
+      var extra = extraAmount();
+      var entry = on
         ? {
             plan: "vip",
             consentText: exactConsentText(),
@@ -464,7 +431,7 @@
           }
         : {
             plan: "guest",
-            consentText: "Guest checkout selected. One-time Calm & Safe Kit purchase. No recurring membership and no recurring-billing consent was requested or accepted.",
+            consentText: "One-time Calm & Safe Kit purchase. The optional VIP add-on was left unchecked. No recurring charge and no recurring consent.",
             acceptedAt: now,
             receiptId: makeId("PPC-GUEST"),
             descriptor: null,
@@ -476,18 +443,16 @@
             checkboxAccepted: false
           };
 
-      var qtyNow = kitQty();
-      var extraPrice = Math.round(version.extraKit * (qtyNow - 1) * 100) / 100;
       var order = {
         version: version.id,
-        plan: selected.value,
+        plan: on ? "vip" : "guest",
         kitName: "Calm & Safe Kit",
-        kitPrice: selected.value === "vip" ? version.vipToday : version.guestToday,
+        kitPrice: on ? version.vipToday : version.guestToday,
         kitQty: qtyNow,
-        extraKitPrice: extraPrice,
-        renewalAmount: selected.value === "vip" ? version.renewal : null,
-        firstBillingDate: selected.value === "vip" ? isoDate(first) : null,
-        firstBillingLabel: selected.value === "vip" ? whenLabel : null,
+        extraKitPrice: extra,
+        renewalAmount: on ? version.renewal : null,
+        firstBillingDate: on ? isoDate(first) : null,
+        firstBillingLabel: on ? whenLabel : null,
         orderedAt: now,
         email: emailInput ? emailInput.value.trim() : "",
         oto1: false,
@@ -506,7 +471,7 @@
       writeJSON(version.logKey, log);
       trackMeta("AddToCart", {
         currency: "USD",
-        value: dueFor(selected.value),
+        value: dueNow(),
         content_ids: ["calm-safe-kit"],
         content_type: "product",
         content_name: "Calm & Safe Kit",
@@ -514,28 +479,12 @@
       });
       trackMeta("InitiateCheckout", {
         currency: "USD",
-        value: dueFor(selected.value),
+        value: dueNow(),
         num_items: qtyNow,
         content_ids: ["calm-safe-kit"]
       });
-      openLog(true);
+      window.location.href = version.upsellPath;
     });
-
-    var openBtn = document.getElementById("open-log");
-    if (openBtn) openBtn.addEventListener("click", function () { openLog(false); });
-
-    var drawer = document.getElementById("log-drawer");
-    if (drawer) {
-      drawer.addEventListener("click", function (e) {
-        if (e.target === drawer) drawer.hidden = true;
-      });
-      drawer.querySelectorAll("[data-close-log]").forEach(function (btn) {
-        btn.addEventListener("click", function () { drawer.hidden = true; });
-      });
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && !drawer.hidden) drawer.hidden = true;
-      });
-    }
   }
 
   function loadOrder() {
@@ -565,7 +514,7 @@
 
     var summary = document.getElementById("upsell-summary");
     if (summary) {
-      summary.textContent = (order.plan === "vip" ? "VIP" : "Guest") + " · Calm & Safe Kit " + money(order.kitPrice) + " is already recorded in this browser. These two offers are optional.";
+      summary.textContent = "Calm & Safe Kit " + money(order.kitPrice) + " is already recorded. " + (order.plan === "vip" ? "You added the optional VIP club." : "The optional VIP add-on was left unchecked.") + " The offers below are optional.";
     }
 
     var step1 = document.getElementById("upsell-step-1");
@@ -889,17 +838,23 @@
     var meta = document.getElementById("receipt-meta");
     var rebill = document.getElementById("rebill-note");
     var save = document.getElementById("save-renewal");
+    var opted = !!(order && (order.plan === "vip" || order.oto2));
+    var reminder = document.getElementById("save-reminder");
     if (save) {
       if (order && order.plan === "vip" && !order.oto2) {
+        save.hidden = false;
         save.textContent = "📅 Your renewal date: " + order.firstBillingLabel + ". " + money(order.renewalAmount) + "/mo, billed as " + DESCRIPTOR + ".";
       } else if (order && order.oto2) {
-        save.textContent = "📅 Annual plan is on this order and replaces the monthly renewal. Later yearly charges are billed as " + DESCRIPTOR + ".";
+        save.hidden = false;
+        save.textContent = "📅 You added the optional annual VIP plan. Later yearly charges are billed as " + DESCRIPTOR + ".";
       } else if (order && order.plan === "guest") {
-        save.textContent = "📅 Guest order: nothing renews.";
+        save.hidden = false;
+        save.textContent = "📅 One-time kit. Nothing renews.";
       } else {
-        save.textContent = "📅 Your renewal date appears here after a VIP checkout.";
+        save.hidden = true;
       }
     }
+    if (reminder) reminder.hidden = !opted;
 
     if (!order || !order.plan) {
       if (empty) empty.hidden = false;
@@ -921,8 +876,9 @@
       if (empty) empty.hidden = true;
       if (receipt) receipt.hidden = false;
       var kitCount = Number(order.kitQty) || 1;
-      var rows = [["Calm & Safe Kit (" + (order.plan === "vip" ? "VIP" : "Guest") + ")", order.kitPrice]];
+      var rows = [["Calm & Safe Kit" + (order.plan === "vip" ? " (VIP price)" : ""), order.kitPrice]];
       if (kitCount > 1 && order.extraKitPrice) rows.push([(kitCount - 1) + " extra kit" + (kitCount > 2 ? "s" : "") + " — same order", order.extraKitPrice]);
+      if (order.plan === "vip") rows.push(["VIP Club (30-day free trial)", 0]);
       if (order.oto1) rows.push(["Extra Calm & Safe Kit — same box, up to 3 pets on one membership", order.oto1Price]);
       if (order.oto2) rows.push(["Annual " + version.clubName, order.annualPrice]);
       lines.textContent = "";
@@ -1263,58 +1219,58 @@
   var HEADS = {
     "a:advertorial": {
       "1": {
-        h1: "It's 11:40 PM and Your Dog Just Ate Something Off the Floor",
-        lede: "Chocolate, grapes, or a sock. The group chat is guessing. This $29.99 kit stays by the door, and the club behind it is 24/7 licensed veterinary guidance, triage, and second opinions — then $29.99/mo if you keep it."
+        h1: "It's 11:40 PM. The Mess Is Still on the Floor.",
+        lede: "The Calm & Safe Kit is what you can put by the door: a steam brush, a suction lick mat, and a battery-free QR/NFC tag. $49.99. Optional VIP perks at checkout."
       },
       "2": {
-        h1: "Stop Googling \"Can Dogs Eat This\" at Midnight",
-        lede: "Fourteen tabs will not know your dog. VIP is $29.99 today for the Calm & Safe Kit and 30 days of PawPocket Club, then $29.99/mo. Guest is $49.99 once. You pick. Nothing is pre-checked."
+        h1: "Shedding, the Bath, and a Collar With No Way Home.",
+        lede: "Three tools. One box. $49.99. Optional VIP perks stay off until you check the box."
       },
       "3": {
-        h1: "Your Dog Ate Something. Here Is the $29.99 Next Move.",
-        lede: "A USB-C steam brush, a suction lick mat, and a battery-free QR tag. Plus licensed veterinary guidance, triage, and a second opinion — not a prescription. It is not insurance and it does not pay claims."
+        h1: "Put the Kit Where Your Hand Already Goes.",
+        lede: "Steam brush, suction lick mat, battery-free QR/NFC tag. No GPS. $49.99. Optional VIP perks at checkout."
       }
     },
     "b:advertorial": {
       "1": {
-        h1: "It's 11 PM. Your Dog Just Inhaled Something Off the Floor.",
-        lede: "Chocolate? Grapes? A sugar-free wrapper? The Digital Club's AI helper gives an educational checklist. The kit ships with it. AI guidance only — not a veterinarian. VIP is $29.99 today, then $19.99/mo."
+        h1: "It's 11 PM. The Wrapper Is on the Floor.",
+        lede: "The Calm & Safe Kit ships to your door: steam brush, suction lick mat, battery-free QR/NFC tag. $49.99. Optional VIP perks at checkout. AI educational guidance only if you add them."
       },
       "2": {
         h1: "The Gate Was Open for 30 Seconds.",
-        lede: "A stranger finds your dog and scans a battery-free QR tag with the camera already in their pocket. You get the alert. The tag has no GPS radio and no tracking fee."
+        lede: "A battery-free QR tag opens on any phone camera. No GPS radio and no tracking fee. The kit is $49.99."
       },
       "3": {
         h1: "Bath-Time Chaos Has a Mat. Shedding Has a Steam Brush.",
-        lede: "Same dog, better tools. $29.99 VIP includes the kit and 30 days of the Whop club, then $19.99/mo. Or $49.99 once, no membership. Neither box starts checked."
+        lede: "The Calm & Safe Kit is $49.99. Optional VIP perks are a checkbox at checkout, and it starts empty."
       }
     },
     "a:product": {
       "1": {
-        h1: "Your Dog Just Ate Something. It's 11 PM. Who Do You Call?",
-        lede: "Get the Calm & Safe Kit for $29.99 with VIP ($20 less than Guest) plus 30 days of 24/7 licensed veterinary guidance, triage, and second opinions. Then $29.99/mo. Cancel in 1 click."
+        h1: "The Kit That Lives by the Front Door.",
+        lede: "Steam brush, suction lick mat, battery-free QR/NFC tag. $49.99. Optional VIP perks at checkout."
       },
       "2": {
-        h1: "Same Kit. $20 Less Today If You Take the Club.",
-        lede: "Guest pays $49.99 for the kit alone. VIP pays $29.99 today and the club continues at $29.99/mo after 30 days unless you cancel. You still have to choose."
+        h1: "Shedding, Bath Time, and a Tag Any Phone Can Scan.",
+        lede: "Three tools in one box. $49.99. The optional VIP checkbox starts unchecked."
       },
       "3": {
-        h1: "Three Tools. One Box. Two Ways to Pay.",
-        lede: "USB-C steam brush, suction lick mat, battery-free QR/NFC tag. The renewal terms sit next to VIP, unchecked, before any charge."
+        h1: "Stop Sweeping Fur. Stop Wrestling the Bath.",
+        lede: "The Calm & Safe Kit is $49.99. No GPS in the tag. Optional VIP perks stay off until you check the box."
       }
     },
     "b:product": {
       "1": {
-        h1: "\"Is That Toxic?\" Stop Googling at Midnight.",
-        lede: "Get the Calm & Safe Kit for $29.99 with VIP ($20 less than Guest) plus 30 days of the 24/7 AI Pet Symptom & Toxic-Food Educational Helper. Then $19.99/mo. Cancel in 1 click. AI educational guidance only. Not a veterinarian."
+        h1: "Brush It. Bathe It. Tag It.",
+        lede: "The Calm & Safe Kit is $49.99, shipped from a U.S. warehouse. Optional VIP perks at checkout. AI educational guidance only if you add them."
       },
       "2": {
-        h1: "Same Kit. $20 Less Today. Then $19.99/mo If You Stay.",
-        lede: "The $20 gap is the Digital Club, not a made-up retail price. Cancel in one click before the renewal date. The checkbox starts empty."
+        h1: "The Sofa Loses. The Bath Gets a Mat.",
+        lede: "$49.99 for the kit. The optional club checkbox starts empty."
       },
       "3": {
-        h1: "Can They Eat That? The Kit, Plus an AI Helper.",
-        lede: "Educational guidance only — not a veterinarian, not a diagnosis, not an emergency replacement. The physical kit still ships to your door."
+        h1: "Three Tools for the Messy Week.",
+        lede: "Steam brush, lick mat, battery-free tag. $49.99. No GPS. Optional VIP perks are a checkbox, not the product."
       }
     }
   };
@@ -1388,7 +1344,7 @@
         content_type: "product",
         content_ids: ["calm-safe-kit"],
         currency: "USD",
-        value: version ? version.vipToday : 29.99
+        value: version ? version.guestToday : 49.99
       });
     }
   }

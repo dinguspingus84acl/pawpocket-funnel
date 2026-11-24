@@ -5,7 +5,7 @@ Researched November 24, 2026. Every number below is quoted from the linked sourc
 The offer this research is applied to:
 
 - Same 3-piece Calm & Safe Kit on both funnels (USB-C steam deshedding brush, food-grade silicone suction lick mat, battery-free QR/NFC collar tag).
-- VIP pays **$29.99 today** and gets 30 days of the club. Guest pays **$49.99 once** and does not renew.
+- The kit is **$49.99** once. Optional VIP is unchecked at checkout: club is **$0.00** for 30 days, then **$29.99/mo** (Version A) or **$19.99/mo** (Version B). Checking it shows a VIP kit price of **$29.99**.
 - Version A then renews at **$29.99/mo**. Version B (Whop digital club) renews at **$19.99/mo**.
 - PawPocket Club is a wellness membership. It is not insurance and it does not pay claims. The tag has no GPS radio. Guest checkout is $49.99.
 
@@ -37,7 +37,7 @@ A Blend Commerce Shopify test put a sticky Add to Cart on mobile product pages a
 
 A cart-drawer test that made Checkout the only primary button increased checkout clicks and, on the reported numbers, reduced revenue per visitor. The useful lesson is hierarchy: one primary action, the other path as a text link. It is not “remove every decline.” [SplitConvert cart-drawer hierarchy test](https://www.splitconvert.com/cro-wins/more-clicks-more-revenue-why-simplifying-checkout-actions-increased-clicks-but-decreased-sales)
 
-No invented “compare at” prices. The only dollar anchor on the page is the real one: Guest is $49.99 for the kit alone, VIP is $29.99 today for the same kit plus 30 days of the club. That is a $20 difference today. The renewal sits in the same table so the lower price is not a trick.
+No invented “compare at” prices. The kit price on the page is $49.99. The $29.99 figure is the VIP kit price, and it appears only after the optional club box is checked. The club itself is $0.00 today, then the monthly renewal.
 
 Risk reversal is a standard close on the advertorial anatomy above, and Jack’s Version B blueprint lists a 30-day kit refund as an example policy, not a signed term. The block on the page is labeled `[CONFIRM GUARANTEE TERMS]` so it cannot go into an ad until the window, return shipping, and opened-kit rule are real.
 
