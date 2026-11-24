@@ -286,8 +286,9 @@
     var version = cfg();
     if (!form || !version) return;
 
-    var vipBox = document.getElementById("vip-addon");
     var termsEl = document.getElementById("vip-terms");
+    var payBtn = document.getElementById("pay-btn");
+    var stickyBtn = document.getElementById("sticky-btn");
     var error = document.getElementById("checkout-error");
     var dueToday = document.getElementById("due-today");
     var dueRenew = document.getElementById("due-renew");
@@ -312,8 +313,17 @@
       return n;
     }
 
+    function selectedPurchase() {
+      return form.querySelector('input[name="purchase"]:checked');
+    }
+
     function vipOn() {
-      return !!(vipBox && vipBox.checked);
+      var selected = selectedPurchase();
+      return !!(selected && selected.value === "vip");
+    }
+
+    function offerDate() {
+      return first.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
     }
 
     function extraAmount() {
@@ -331,12 +341,12 @@
     function renderTerms() {
       if (!termsEl) return;
       termsEl.textContent = "";
-      termsEl.appendChild(document.createTextNode(parts.before));
+      termsEl.appendChild(document.createTextNode("VIP: $0 today for membership, then " + money(version.renewal) + "/mo starting " + offerDate() + " until you cancel. Billed as " + DESCRIPTOR + ". Cancel anytime in "));
       var a = document.createElement("a");
       a.href = parts.link;
-      a.textContent = parts.link;
+      a.textContent = "1 click";
       termsEl.appendChild(a);
-      termsEl.appendChild(document.createTextNode(parts.after));
+      termsEl.appendChild(document.createTextNode("."));
     }
 
     function exactConsentText() {
@@ -371,26 +381,28 @@
       if (priceCaption) priceCaption.textContent = on ? "VIP price" : "Kit price";
       if (vipPriceLine) vipPriceLine.hidden = !on;
       if (termsEl) termsEl.hidden = !on;
+      var buttonLabel = (on ? "Buy VIP — " : "Buy once — ") + money(dueNow());
+      if (payBtn) payBtn.textContent = buttonLabel;
+      if (stickyBtn) stickyBtn.textContent = buttonLabel;
       if (stickyPrice) stickyPrice.textContent = on ? ("VIP price " + money(version.vipToday)) : money(version.guestToday);
       syncExpress();
     }
 
-    function resetVip() {
-      if (vipBox) vipBox.checked = false;
-      if (error) {
-        error.hidden = true;
-        error.textContent = "";
-      }
-      refreshDue();
-    }
-
     renderTerms();
-    resetVip();
+    refreshDue();
     window.addEventListener("pageshow", function (event) {
-      if (event.persisted) resetVip();
+      if (event.persisted) refreshDue();
     });
 
-    if (vipBox) vipBox.addEventListener("change", refreshDue);
+    form.querySelectorAll('input[name="purchase"]').forEach(function (radio) {
+      radio.addEventListener("change", function () {
+        if (error) {
+          error.hidden = true;
+          error.textContent = "";
+        }
+        refreshDue();
+      });
+    });
     form.querySelectorAll('input[name="kit-qty"]').forEach(function (qty) {
       qty.addEventListener("change", refreshDue);
     });
@@ -405,6 +417,13 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var on = vipOn();
+      if (on && (!termsEl || termsEl.hidden || !termsEl.innerText.trim())) {
+        if (error) {
+          error.hidden = false;
+          error.textContent = "The VIP renewal line has to be visible before this order.";
+        }
+        return;
+      }
       var now = new Date().toISOString();
       var emailInput = document.getElementById("order-email");
       var qtyNow = kitQty();
@@ -425,7 +444,7 @@
           }
         : {
             plan: "guest",
-            consentText: "One-time Calm & Safe Kit purchase. The optional VIP add-on was left unchecked. No recurring charge and no recurring consent.",
+            consentText: "One-time purchase selected. Kit only. No VIP membership and no recurring charge. The renewal line was not the selected option.",
             acceptedAt: now,
             receiptId: makeId("PPC-GUEST"),
             descriptor: null,
@@ -508,7 +527,7 @@
 
     var summary = document.getElementById("upsell-summary");
     if (summary) {
-      summary.textContent = "Calm & Safe Kit " + money(order.kitPrice) + " is already recorded. " + (order.plan === "vip" ? "You added the optional VIP club." : "The optional VIP add-on was left unchecked.") + " The offers below are optional.";
+      summary.textContent = "Calm & Safe Kit " + money(order.kitPrice) + " is recorded. " + (order.plan === "vip" ? "You chose VIP price: the kit plus 30 days of VIP free, then the monthly club." : "You chose the one-time purchase. Nothing renews.") + " The offers below are optional.";
     }
 
     var step1 = document.getElementById("upsell-step-1");
