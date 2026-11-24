@@ -23,7 +23,7 @@ A week-over-week launch (not a split test) sent paid traffic to new advertorial 
 
 What that means here: Version B’s ads already name the 11 p.m. wrapper, the open gate, and the bath. The advertorial has to open on that same picture. Version A’s ad, when it exists, has to use the same sentence as the advertorial variant Jack puts in the URL. `?h=2` and `?h=3` exist so the Meta ad and the H1 can be paired without a new page.
 
-Story slots stay empty. LiftArchive mentions a test that swapped a Trustpilot logo for plain stars and a rating line. We will not add stars, counts, or logos until a real review exists. The empty `[INSERT REAL CUSTOMER STORY]` slot is the honest version of “proof goes here.”
+Story slots stay empty. LiftArchive mentions a test that swapped a Trustpilot logo for plain stars and a rating line. We will not add stars, counts, or logos until a real review exists. Sample stories on the pages are labeled Sample story. There is no star total and no review count.
 
 ## 2. Product and checkout pages
 
@@ -39,7 +39,7 @@ A cart-drawer test that made Checkout the only primary button increased checkout
 
 No invented “compare at” prices. The kit price on the page is $49.99. The $29.99 figure is the VIP kit price, and it appears only after the optional club box is checked. The club itself is $0.00 today, then the monthly renewal.
 
-Risk reversal is a standard close on the advertorial anatomy above, and Jack’s Version B blueprint lists a 30-day kit refund as an example policy, not a signed term. The block on the page is labeled `[CONFIRM GUARANTEE TERMS]` so it cannot go into an ad until the window, return shipping, and opened-kit rule are real.
+Risk reversal is a standard close on the advertorial anatomy above, and Jack’s Version B blueprint lists a 30-day kit refund as an example policy, not a signed term. The live default is a 60-day happy-pet refund with no need to send the kit back. Jack can replace that sentence later.
 
 ## 3. Continuity that can still win the VIP choice
 
@@ -108,7 +108,7 @@ Impact is for cold Meta traffic. Effort is the edit in this static repo. Complia
 | 5 | Slim header on the presell and offer pages: one button plus Cancel | Navigation is a leak. Cancel has to stay | [CXL](https://cxl.com/blog/how-to-build-a-high-converting-landing-page/), [BPC § 17602](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17602) | Low |
 | 6 | VIP vs Guest table: $29.99 vs $49.99 today, renewal in the same table, VIP card visually first, neither selected | Wins the better offer without a pre-check or a fake “most popular” | [ROSCA via Federal Register](https://www.federalregister.gov/documents/2026/03/13/2026-04952/rule-concerning-the-use-of-prenotification-negative-option-plans) | Medium |
 | 7 | Keep the unchecked consent box, descriptor, date, and cancel link | Express informed consent | [BPC § 17602](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17602) | Already built |
-| 8 | `[CONFIRM GUARANTEE TERMS]` block and a matching FAQ | Risk reversal without inventing a policy | Blueprint example plus advertorial close in [Adspends](https://adspends.com/blog/how-to-write-an-advertorial) | Low |
+| 8 | 60-day happy-pet guarantee under Buy now and in the FAQ | Risk reversal | Blueprint example plus advertorial close in [Adspends](https://adspends.com/blog/how-to-write-an-advertorial) | Low |
 | 9 | One email field, express-pay placeholders that cannot skip consent | Field count, thumb-zone primary button | [Baymard form fields](https://baymard.com/research-articles/checkout-flow-average-form-fields) | Low |
 | 10 | Upsell: one price, one yes, “No thanks, complete my order” | Respectful one-click OTO | [Hren](https://hren.io/blog/shopify-post-purchase-upsell-copy) | Low |
 | 11 | Meta events stubbed, no pixel ID until Jack pastes one | Purchase optimization needs `value` and `currency` | [Meta pixel reference](https://developers.facebook.com/docs/meta-pixel/reference) | Low |

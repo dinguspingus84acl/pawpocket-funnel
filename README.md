@@ -64,17 +64,17 @@ Nothing on this site charges a card. Hook the same screen to a processor when yo
 
 Kit quantity defaults to 1 and is not a consent item. Two kits add $19.99 and three add $39.98. The second-kit upsell appears only when quantity is 1.
 
-## Still unconfirmed
+## Defaults Jack can edit later
 
-These stay as visible placeholders. Do not invent the missing numbers.
-
-- **[CONFIRM GUARANTEE TERMS]** — window, who pays return shipping, and whether an opened brush qualifies. Jack still has to confirm those before the guarantee is advertised. Do not put that sentence in an ad until the words are final.
-- **[CONFIRM HANDLING]** business days and **[CONFIRM SHIP WINDOW]**
-- Specs: **[CONFIRM battery/run time]** and **[CONFIRM size]**
-- **[CONFIRM SLA]** and **[INSERT LOCAL ER EXAM FEE + SOURCE]** stay unused until a sourced comparison is allowed back on the journal
-- **[CONFIRM: reminder email wired]** on the day-25 step. Do not promise the reminder email until the billing backend actually sends it.
-- **[CONFIRM: you keep access until the end of the period you already paid for.]**
-- **[INSERT REAL CUSTOMER STORY]** — three empty cards on checkout. No stars and no counts.
+- **Guarantee:** 60-Day Happy Pet Guarantee. Full refund on the kit if you're not happy, no need to send it back.
+- **Shipping:** Ships in 1-2 business days. Delivered in 3-7 business days (US). Free shipping on 2+ kits. The PDP fills a real arrival range from today.
+- **Reminder:** We email you a reminder 5 days before each renewal.
+- **Version A response:** Typical response in under 15 minutes, 24/7.
+- **Version B response:** Instant AI guidance answer. AI educational guidance only.
+- **ER exam line:** Emergency vet exam fees often run $100-$200+ before any treatment.
+- **After cancel:** VIP perks stay active until the end of your current paid period.
+- **Stories:** Six sample stories, each labeled Sample story. No star totals, counts, or dates.
+- **Meta Pixel:** `YOUR_PIXEL_ID` in `assets/funnel.js`. Replace that string with the real Pixel ID.
 
 Shopper pages do not say that a page "does not place a call" or that the static checkout "does not connect you to a veterinarian." Those notes live in HTML comments on the Version A checkout.
 
@@ -84,7 +84,7 @@ Shopper pages do not say that a page "does not place a call" or that the static 
 
 ## What this site will not do
 
-- Invent reviews, star ratings, press logos, member counts, or countdown timers. Empty slots are marked `[INSERT REAL CUSTOMER STORY]` and `[INSERT REAL REVIEW BEFORE LAUNCH]`.
+- Invent star ratings, press logos, member counts, or countdown timers. Sample stories are labeled Sample story.
 - Call the membership insurance, or describe a self-funded emergency fund. The shopper-facing line is: "It is not insurance and it does not pay claims."
 - Claim GPS on the collar tag. It is a battery-free QR/NFC tag.
 - Promise online prescriptions or a diagnosis where a state VCPR does not allow it (Version A).

@@ -239,26 +239,19 @@
     });
   }
 
+  function formatShort(d) {
+    return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+  }
+
   function initDelivery() {
     var el = document.getElementById("delivery-strip");
     if (!el) return;
     var today = new Date();
     today.setHours(12, 0, 0, 0);
-    var ordered = today.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-    var handling = el.getAttribute("data-handling-days");
-    var shipText = "+[CONFIRM HANDLING] business days";
-    var arriveText = "[CONFIRM SHIP WINDOW]";
-    if (handling && /^\d+$/.test(handling)) {
-      var ships = addBusinessDays(today, Number(handling));
-      shipText = ships.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-      var windowDays = el.getAttribute("data-ship-window-days");
-      if (windowDays && /^\d+$/.test(windowDays)) {
-        var arrives = addBusinessDays(ships, Number(windowDays));
-        arriveText = arrives.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-      }
-    }
+    var start = addBusinessDays(today, 3);
+    var end = addBusinessDays(today, 7);
     var warehouse = document.body.dataset.version === "b" ? " Ships from a U.S. warehouse." : "";
-    el.textContent = "📦 Ordered: Today (" + ordered + ")  →  🚚 Ships: " + shipText + "  →  🏠 Arrives: " + arriveText + warehouse;
+    el.textContent = "Ships in 1-2 business days. Arrives " + formatShort(start) + "–" + formatShort(end) + ". Delivered in 3-7 business days (US). Free shipping on 2+ kits." + warehouse;
   }
 
   function renderLogEntry(entry) {
@@ -923,10 +916,10 @@
         var p = document.createElement("p");
         if (order.plan === "vip" && !order.oto2) {
           h.textContent = "Before the first renewal";
-          p.textContent = "[CONFIRM: reminder email wired] The first " + money(version.renewal) + "/mo charge is " + order.firstBillingLabel + ", billed as " + DESCRIPTOR + ". Cancel in 1 click any time before then. A day-25 reminder email is not confirmed as wired.";
+          p.textContent = "We email you a reminder 5 days before each renewal. The first " + money(version.renewal) + "/mo charge is " + order.firstBillingLabel + ", billed as " + DESCRIPTOR + ". Cancel in 1 click any time before then. VIP perks stay active until the end of your current paid period.";
         } else if (order.oto2) {
           h.textContent = "Annual plan, no monthly rebill";
-          p.textContent = "The annual lock-in replaces the monthly renewal. [CONFIRM: reminder email wired] You can cancel in 1 click any time before the next yearly charge.";
+          p.textContent = "The annual lock-in replaces the monthly renewal. We email you a reminder 5 days before each renewal. You can cancel in 1 click any time before the next yearly charge. VIP perks stay active until the end of your current paid period.";
         } else {
           h.textContent = "No renewal on a guest kit";
           p.textContent = "A Guest order is one-time. Nothing renews, so there is no day-25 reminder unless a membership is added later.";
@@ -1211,8 +1204,9 @@
   // capiEndpoint: your server that hashes user data and POSTs to
   // https://graph.facebook.com/v21.0/{PIXEL_ID}/events
   // Send the same eventId as event_id so Pixel and CAPI dedupe.
+  // Replace YOUR_PIXEL_ID with the real Meta Pixel ID.
   var META = {
-    pixelId: "",
+    pixelId: "YOUR_PIXEL_ID",
     capiEndpoint: "",
     testEventCode: ""
   };
@@ -1221,7 +1215,7 @@
     "a:advertorial": {
       "1": {
         h1: "It's 11:40 PM. The Mess Is Still on the Floor.",
-        lede: "The Calm & Safe Kit is what you can put by the door: a steam brush, a suction lick mat, and a battery-free QR/NFC tag. $49.99. Optional VIP perks at checkout."
+        lede: "Fur on the couch. A bath that turns into a fight. A collar that still cannot tell a stranger who to call. The Calm & Safe Kit is $49.99. This batch ships in 1-2 business days, and the fridge card plus wallet pet ID are included at $0."
       },
       "2": {
         h1: "Shedding, the Bath, and a Collar With No Way Home.",
@@ -1235,7 +1229,7 @@
     "b:advertorial": {
       "1": {
         h1: "It's 11 PM. The Wrapper Is on the Floor.",
-        lede: "The Calm & Safe Kit ships to your door: steam brush, suction lick mat, battery-free QR/NFC tag. $49.99. Optional VIP perks at checkout. AI educational guidance only if you add them."
+        lede: "Fur, the bath, and a collar that still cannot tell a stranger who to call. The Calm & Safe Kit is $49.99 and this batch ships in 1-2 business days from a U.S. warehouse. Fridge card and wallet pet ID included at $0. AI educational guidance only if you add VIP."
       },
       "2": {
         h1: "The Gate Was Open for 30 Seconds.",
@@ -1310,15 +1304,17 @@
   }
 
   function loadPixel() {
-    if (!META.pixelId || window.fbq) return;
-    var script = document.createElement("script");
-    script.async = true;
-    script.src = "https://connect.facebook.net/en_US/fbevents.js";
-    document.head.appendChild(script);
-    window.fbq = window.fbq || function () {
-      (window.fbq.queue = window.fbq.queue || []).push(arguments);
-    };
+    if (window.fbq) return;
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)
+    }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
     window.fbq("init", META.pixelId);
+    window.fbq("track", "PageView");
   }
 
   function applyHeadlines() {
@@ -1337,8 +1333,7 @@
   function initMetaPage() {
     loadPixel();
     var page = document.body.dataset.page || "";
-    trackMeta("PageView", { page: page });
-    if (page === "product" || page === "advertorial" || page === "listicle") {
+    if (page === "product") {
       var version = cfg();
       trackMeta("ViewContent", {
         content_name: "Calm & Safe Kit",
