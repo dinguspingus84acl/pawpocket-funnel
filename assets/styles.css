@@ -1,19 +1,19 @@
 :root {
-  --cream: #faf7f2;
+  --cream: #ffffff;
   --white: #ffffff;
-  --forest: #1b4332;
-  --forest-deep: #143528;
-  --sage: #74a57f;
-  --sage-soft: #e7f0e8;
-  --terra: #d96b43;
-  --terra-deep: #c25732;
-  --ink: #1f2421;
-  --muted: #5a635e;
-  --line: #e4ddd4;
+  --forest: #121212;
+  --forest-deep: #121212;
+  --sage: #ffa84b;
+  --sage-soft: #fff4e8;
+  --terra: #121212;
+  --terra-deep: #dd1d1d;
+  --ink: #121212;
+  --muted: #4a4a4a;
+  --line: #e6e6e6;
   --cancel: #9c3b2e;
   --shadow: 0 18px 50px rgba(31, 36, 33, 0.07);
-  --serif: "Fraunces", "Iowan Old Style", Palatino, Georgia, serif;
-  --sans: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
+  --serif: Poppins, "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
+  --sans: Poppins, "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
   --wrap: min(1120px, calc(100% - 32px));
   color-scheme: light;
 }
@@ -50,7 +50,7 @@ h1, h2, h3, .serif {
   color: var(--forest-deep);
 }
 
-h1 { font-size: clamp(2.15rem, 5vw, 4.1rem); font-weight: 680; margin: 0.2em 0 0.35em; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; margin: 0.2em 0 0.35em; letter-spacing: -0.02em; }
 h2 { font-size: clamp(1.7rem, 3vw, 2.45rem); margin: 0 0 0.45em; }
 h3 { font-size: 1.35rem; margin: 0 0 0.35em; }
 
@@ -248,17 +248,20 @@ figcaption, .fine { color: var(--muted); font-size: 0.92rem; }
   gap: 8px;
   min-height: 48px;
   padding: 12px 18px;
-  border-radius: 999px;
+  border-radius: 2px;
   border: 1.5px solid transparent;
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.86rem;
   text-decoration: none;
   cursor: pointer;
   line-height: 1.2;
   text-align: center;
 }
 
-.btn-cta { background: var(--terra); color: white; }
-.btn-cta:hover { background: var(--terra-deep); }
+.btn-cta { background: #121212; color: white; }
+.btn-cta:hover { background: #dd1d1d; }
 .btn-forest { background: var(--forest); color: var(--cream); }
 .btn-forest:hover { background: var(--forest-deep); }
 .btn-ghost { background: transparent; border-color: var(--forest); color: var(--forest); }
@@ -715,8 +718,8 @@ details.faq p:last-child { margin-bottom: 0; }
 .footer-meta { font-size: 0.88rem; margin-top: 18px; }
 
 .topbar {
-  background: var(--forest);
-  color: var(--cream);
+  background: #121212;
+  color: #fff;
   height: 36px;
   max-height: 40px;
   padding: 0 12px;
@@ -724,8 +727,10 @@ details.faq p:last-child { margin-bottom: 0; }
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: clamp(0.68rem, 2.7vw, 0.86rem);
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
@@ -907,4 +912,37 @@ details.faq p:last-child { margin-bottom: 0; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; }
+}
+
+.site-header { border-bottom: 1px solid var(--line); }
+.logo { letter-spacing: 0.16em; text-transform: uppercase; font-size: 1.05rem; }
+.header-cart {
+  background: transparent;
+  border: 0;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.store-hero {
+  display: grid;
+  gap: 18px;
+  align-items: center;
+  padding: 28px 0 10px;
+}
+.store-hero img { width: 100%; border-radius: 0; }
+.store-kicker { letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.75rem; font-weight: 700; }
+.product-grid { display: grid; gap: 16px; }
+.product-card { text-decoration: none; color: inherit; display: block; }
+.product-card img { width: 100%; }
+.product-card strong { display: block; margin-top: 8px; }
+.gift-line { background: #fff4e8; border-radius: 4px; padding: 10px 12px; font-weight: 650; }
+.num-steps { display: grid; gap: 12px; }
+.num-steps article { background: #fff; border: 1px solid var(--line); padding: 16px; }
+.num-steps span { display: block; font-size: 1.8rem; font-weight: 700; color: #ffa84b; }
+@media (min-width: 800px) {
+  .store-hero { grid-template-columns: 1.1fr 0.9fr; }
+  .product-grid { grid-template-columns: repeat(3, 1fr); }
+  .num-steps { grid-template-columns: 1fr 1fr 1fr; }
 }

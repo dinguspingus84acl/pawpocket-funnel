@@ -190,13 +190,13 @@
       return {
         before: before,
         link: version.cancelPath,
-        after: ". PawPocket Club is a wellness membership. It is not insurance and it does not pay claims."
+        after: ". Renewals ship no physical product. PawPocket Club is a wellness membership. It is not insurance and it does not pay claims."
       };
     }
     return {
       before: before,
       link: version.cancelPath,
-      after: ". PawPocket Digital Club is a wellness membership. It is not insurance and it does not pay claims. The helper is AI educational guidance only — not a licensed veterinarian, diagnosis, or emergency replacement."
+        after: ". Renewals ship no physical product. PawPocket Digital Club is a wellness membership. It is not insurance and it does not pay claims. The helper is AI educational guidance only — not a licensed veterinarian, diagnosis, or emergency replacement."
     };
   }
 
@@ -377,6 +377,7 @@
       if (displayPrice) displayPrice.textContent = money(on ? version.vipToday : version.guestToday);
       if (priceCaption) priceCaption.textContent = on ? "VIP price" : "Kit price";
       if (vipPriceLine) vipPriceLine.hidden = !on;
+      if (termsEl) termsEl.hidden = !on;
       if (stickyPrice) stickyPrice.textContent = on ? ("VIP price " + money(version.vipToday)) : money(version.guestToday);
       syncExpress();
     }
@@ -1364,5 +1365,20 @@
     initCancel();
     initTag();
     initAI();
+    initCart();
   });
+
+  function initCart() {
+    var drawer = document.getElementById("cart-drawer");
+    if (!drawer) return;
+    document.querySelectorAll("[data-cart-open]").forEach(function (btn) {
+      btn.addEventListener("click", function () { drawer.hidden = false; });
+    });
+    drawer.querySelectorAll("[data-cart-close]").forEach(function (btn) {
+      btn.addEventListener("click", function () { drawer.hidden = true; });
+    });
+    drawer.addEventListener("click", function (e) {
+      if (e.target === drawer) drawer.hidden = true;
+    });
+  }
 })();
