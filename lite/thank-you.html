@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fast-Launch · Your order | PawPocket Club</title>
+<meta name="description" content="Order receipt, day-25 reminder, and a Wallet Pet ID you can download as a PNG.">
+<meta name="theme-color" content="#1B4332">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body data-version="b" data-page="thanks" data-root="../" class="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="logo" href="../index.html"><svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#1B4332"/><circle cx="15" cy="16" r="4" fill="#FAF7F2"/><circle cx="32" cy="14.5" r="3.3" fill="#FAF7F2"/><circle cx="11.5" cy="26" r="3" fill="#FAF7F2"/><circle cx="36" cy="25" r="3" fill="#FAF7F2"/><ellipse cx="24" cy="33" rx="7.2" ry="5.6" fill="#FAF7F2"/></svg>PawPocket <em>Club</em></a>
+  <nav class="header-nav" aria-label="Primary">
+          <a class="btn btn-cta" href="product.html">See the kit</a>
+          <a href="cancel.html">Cancel</a></nav>
+</header>
+<main id="main">
+
+<section class="wrap hero">
+  <p class="kicker">Order recorded in this browser</p>
+  <h1>You're set. Build the pet ID before you close the tab.</h1>
+  <p class="lede">The receipt is in this browser only. No card was charged. Next: the pet ID, the AI quick-check, and the one-click cancel page.</p>
+</section>
+<section class="wrap thanks-grid" data-thanks>
+  <div class="card">
+    <div id="receipt-empty">
+      <h2>No order is stored in this browser yet</h2>
+      <p>Run checkout first and the line items, consent receipt, and renewal date show up here. You can still build a Wallet Pet ID below.</p>
+      <a class="btn btn-cta" href="product.html">Go to checkout</a>
+    </div>
+    <div id="receipt-body" hidden>
+      <h2>Receipt</h2>
+      <table class="receipt">
+        <tbody id="receipt-lines"></tbody>
+        <tfoot><tr><td>Due today</td><td id="receipt-total"></td></tr></tfoot>
+      </table>
+      <div id="receipt-meta"></div>
+      <div id="rebill-note" hidden></div>
+      <p class="disclosure">PawPocket Club is a wellness membership, not pet insurance.</p>
+    </div>
+  </div>
+  <div class="pass-builder">
+    <p class="kicker">Minute-1 pass</p>
+    <h2>Wallet Pet ID</h2>
+    <p>Type the dog you actually live with. The card updates as you go. Download saves a PNG from this page — nothing is uploaded.</p>
+    <canvas id="pass-canvas" class="pass-canvas" width="1200" height="720" aria-label="Wallet pet ID preview"></canvas>
+    <div class="pass-fields">
+      <label class="field">Pet name <input id="pet-name" autocomplete="off" placeholder="Milo"></label>
+      <label class="field">Breed <input id="pet-breed" autocomplete="off" placeholder="Golden Retriever"></label>
+      <label class="field wide">Allergies <input id="pet-allergies" autocomplete="off" placeholder="Chicken"></label>
+      <label class="field wide">Medications <input id="pet-meds" autocomplete="off" placeholder="As prescribed"></label>
+      <label class="field wide">Owner phone <input id="pet-phone" inputmode="tel" autocomplete="off" placeholder="(555) 014-0192"></label>
+    </div>
+    <div class="btn-row">
+      <button type="button" class="btn btn-cta" id="pass-download">Download Card PNG</button>
+      <a class="btn btn-ghost" id="pass-tag-link" href="../tag.html">Open this pet's tag page</a>
+    </div>
+    <p class="fine">The pass is a card a finder or a front desk can read. It is not a GPS tracker and it is not a medical record from a clinic.</p>
+    <p><a href="cancel.html">Cancel page</a> · <a href="../tag.html">Tag page</a></p>
+  </div>
+</section>
+
+<section class="wrap section">
+  <div class="card">
+    <p class="kicker">Whop member portal</p>
+    <h2>First minutes inside the digital club</h2>
+    <p>Version B is delivered on Whop. A live order would open the member portal from this screen. The static demo keeps the first jobs here, where you can see them.</p>
+    <ol class="perk-list">
+      <li>Build the Wallet Pet ID below and download the PNG to the phone you actually carry.</li>
+      <li>Open the tag page once so you know what a finder sees. The tag is battery-free. No GPS.</li>
+      <li>Run the AI quick-check on a food you already worry about, and read the limit out loud: educational notes, then your own veterinarian if a dog is in trouble.</li>
+      <li>Save the one-click cancel page before day 25.</li>
+    </ol>
+    <a class="btn btn-forest" href="cancel.html">Open the 1-click cancellation page</a>
+  </div>
+</section>
+<section class="wrap section">
+  <div class="ai-card" data-ai-check>
+    <p class="kicker">Preview, not a clinic</p>
+    <h2>AI Toxic-Food &amp; Symptom Quick-Check</h2>
+    <p class="disclaimer-banner">24/7 AI Pet Symptom &amp; Toxic-Food Educational Helper (AI educational guidance only — not a licensed veterinarian, diagnosis, or emergency replacement).</p>
+    <div class="chips">
+      <button type="button" data-food="Grapes">Grapes</button>
+      <button type="button" data-food="Dark Chocolate">Dark Chocolate</button>
+      <button type="button" data-food="Xylitol">Xylitol</button>
+      <button type="button" data-food="Peanut Butter">Peanut Butter</button>
+      <button type="button" data-food="Onions">Onions</button>
+      <button type="button" data-food="Apple Slices">Apple Slices</button>
+      <button type="button" data-food="Vomiting">Vomiting</button>
+      <button type="button" data-food="Seizure">Seizure</button>
+    </div>
+    <form id="ai-form" class="ai-row">
+      <label class="sr-only" for="ai-input">Food or symptom</label>
+      <input id="ai-input" name="query" placeholder="Or type grapes, xylitol, vomiting…" autocomplete="off">
+      <button class="btn btn-forest" type="submit">Check</button>
+    </form>
+    <div id="ai-result" hidden aria-live="polite"></div>
+  </div>
+</section>
+
+
+</main>
+<footer class="site-footer"><div class="wrap footer-grid">
+          <div><strong>PawPocket Club</strong>
+            <p class="footer-disclosure">PawPocket Club is a wellness membership, not pet insurance.</p>
+            <p>This Fast-Launch edition does not include live veterinarians or clinic discounts. The 24/7 AI Pet Symptom &amp; Toxic-Food Educational Helper is AI educational guidance only — not a licensed veterinarian, diagnosis, or emergency replacement.</p>
+          </div>
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="advertorial.html">Journal</a>
+            <a href="listicle.html">5 reasons</a>
+            <a href="product.html">Checkout</a>
+            <a href="upsell.html">Add-ons</a>
+            <a href="cancel.html">Cancel membership</a>
+          </nav>
+          <div><p>The collar tag is battery-free QR/NFC. Any smartphone camera opens the pet's emergency contact and med profile. The tag has no GPS radio and no tracking subscription.</p>
+            <p><a href="../tag.html">Open the tag page</a> · <a href="../index.html">Both versions</a></p></div>
+        </div><p class="wrap footer-meta">© 2026 PawPocket Club. Static demo checkout — no card is charged on this site.</p></footer>
+<script src="../assets/funnel.js" defer></script>
+</body>
+</html>

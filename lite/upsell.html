@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fast-Launch · Optional add-ons | PawPocket Club</title>
+<meta name="description" content="Two optional offers after checkout: an extra Calm and Safe Kit, then an annual membership.">
+<meta name="theme-color" content="#1B4332">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="preload" as="image" href="../img/kit-hero.webp" type="image/webp" fetchpriority="high">
+
+</head>
+<body data-version="b" data-page="upsell" data-root="../" class="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="logo" href="../index.html"><svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#1B4332"/><circle cx="15" cy="16" r="4" fill="#FAF7F2"/><circle cx="32" cy="14.5" r="3.3" fill="#FAF7F2"/><circle cx="11.5" cy="26" r="3" fill="#FAF7F2"/><circle cx="36" cy="25" r="3" fill="#FAF7F2"/><ellipse cx="24" cy="33" rx="7.2" ry="5.6" fill="#FAF7F2"/></svg>PawPocket <em>Club</em></a>
+  <nav class="header-nav" aria-label="Primary">
+          <a class="btn btn-cta" href="product.html">See the kit</a>
+          <a href="cancel.html">Cancel</a></nav>
+</header>
+<main id="main">
+
+<section class="wrap hero">
+  <p class="kicker">After checkout · 2 optional offers</p>
+  <h1>Two add-ons. Both easy to skip.</h1>
+  <p id="upsell-summary" class="lede">Loading the kit from this browser…</p>
+</section>
+<section class="wrap" data-upsell>
+  <div id="upsell-missing" class="card">
+    <h2>No kit is in this browser yet</h2>
+    <p>Checkout stores the order on this device only. Start there and these offers attach to that receipt. Nothing is added by visiting this page.</p>
+    <a class="btn btn-cta" href="product.html">Go to checkout</a>
+  </div>
+  <div id="upsell-flow" hidden>
+    <ol class="steps" aria-label="Progress">
+      <li data-pip="1">1 · Extra kit</li>
+      <li data-pip="2">2 · Annual club</li>
+    </ol>
+    <article id="upsell-step-1" class="upsell-card">
+      <p class="kicker">One decision</p>
+      <h2>Add a second kit for the other dogs</h2>
+      <p class="price">$19.99</p>
+      <picture><source srcset="../img/kit-hero.webp" type="image/webp"><img src="../img/kit-hero.jpg" width="1152" height="864" alt="The Calm and Safe Kit: steam brush, lick mat, and QR tag." fetchpriority="high"></picture>
+      <p>One click. $19.99. Same box. One membership covers up to 3 pets. Saying no just finishes the order you already placed.</p>
+      <button type="button" class="btn btn-cta" id="accept-oto1">Add the second kit — $19.99</button>
+      <button type="button" class="btn btn-quiet" id="decline-oto1">No thanks, complete my order</button>
+    </article>
+    <article id="upsell-step-2" class="upsell-card" hidden>
+      <p class="kicker">Step 2 of 2 · optional</p>
+      <h2>Lock in annual PawPocket Digital Club</h2>
+      <p class="price">$99<small>/yr</small></p>
+      <p>Lock the Whop digital club into one annual payment of $99. Twelve months at $19.99 is $239.88. You save $140.88 per year. Charged today with this order. It replaces the $19.99 monthly renewal. You can still cancel in one click.</p>
+      <p class="fine">Math in the open: $19.99 × 12 = $239.88. Annual is $99. Difference: $140.88.</p>
+      <button type="button" class="btn btn-cta" id="accept-oto2">Add annual — $99/yr</button>
+      <button type="button" class="btn btn-quiet" id="decline-oto2">No thanks, complete my order</button>
+    </article>
+    <article id="upsell-done" class="card" hidden>
+      <h2>Add-ons already recorded</h2>
+      <p>This browser already finished the two offers.</p>
+      <a class="btn btn-cta" href="thank-you.html">View your receipt</a>
+    </article>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer"><div class="wrap footer-grid">
+          <div><strong>PawPocket Club</strong>
+            <p class="footer-disclosure">PawPocket Club is a wellness membership, not pet insurance.</p>
+            <p>This Fast-Launch edition does not include live veterinarians or clinic discounts. The 24/7 AI Pet Symptom &amp; Toxic-Food Educational Helper is AI educational guidance only — not a licensed veterinarian, diagnosis, or emergency replacement.</p>
+          </div>
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="advertorial.html">Journal</a>
+            <a href="listicle.html">5 reasons</a>
+            <a href="product.html">Checkout</a>
+            <a href="upsell.html">Add-ons</a>
+            <a href="cancel.html">Cancel membership</a>
+          </nav>
+          <div><p>The collar tag is battery-free QR/NFC. Any smartphone camera opens the pet's emergency contact and med profile. The tag has no GPS radio and no tracking subscription.</p>
+            <p><a href="../tag.html">Open the tag page</a> · <a href="../index.html">Both versions</a></p></div>
+        </div><p class="wrap footer-meta">© 2026 PawPocket Club. Static demo checkout — no card is charged on this site.</p></footer>
+<script src="../assets/funnel.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lost pet tag | PawPocket Club</title>
+<meta name="description" content="Battery-free QR/NFC collar tag page. Shows a pet's emergency contact and med profile when any smartphone camera opens the link. No GPS.">
+<meta name="theme-color" content="#1B4332">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="preload" as="image" href="img/qr-tag-collar.webp" type="image/webp" fetchpriority="high">
+
+</head>
+<body data-version="tag" data-page="tag" data-root="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="logo" href="index.html"><svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#1B4332"/><circle cx="15" cy="16" r="4" fill="#FAF7F2"/><circle cx="32" cy="14.5" r="3.3" fill="#FAF7F2"/><circle cx="11.5" cy="26" r="3" fill="#FAF7F2"/><circle cx="36" cy="25" r="3" fill="#FAF7F2"/><ellipse cx="24" cy="33" rx="7.2" ry="5.6" fill="#FAF7F2"/></svg>PawPocket <em>Club</em></a>
+  <nav class="header-nav" aria-label="Primary">
+    <a href="index.html">Hub</a>
+    <a href="product.html">Version A</a>
+    <a href="lite/product.html">Version B</a>
+  </nav>
+</header>
+<main id="main">
+  <article class="tag-card" data-tag>
+    <p class="kicker" id="tag-mode">Demo profile — not a real lost-pet report</p>
+    <figure class="figure">
+      <picture><source srcset="img/qr-tag-collar.webp" type="image/webp"><img src="img/qr-tag-collar.jpg" width="1152" height="864" alt="Close-up of a round forest-green and brass QR collar tag on a leather dog collar." fetchpriority="high"></picture>
+    </figure>
+    <h1 id="tag-pet">Milo</h1>
+    <p id="tag-breed">Golden Retriever</p>
+    <div class="alert-card">
+      <h2>Allergies &amp; meds</h2>
+      <p id="tag-allergies">Chicken (demo profile)</p>
+      <p id="tag-meds">Daily allergy tablet, as prescribed (demo profile)</p>
+    </div>
+    <p>Owner phone: <strong id="tag-phone-label">(555) 014-0192</strong></p>
+    <div class="tag-actions">
+      <a class="btn btn-cta" id="tag-call" href="tel:+15550140192">Call owner</a>
+      <a class="btn btn-forest" id="tag-sms" href="sms:+15550140192?body=I%20scanned%20the%20PawPocket%20collar%20tag.">Text owner</a>
+    </div>
+    <button type="button" class="btn btn-ghost btn-block" id="tag-notify">Notify Owner That Tag Was Scanned</button>
+    <div id="tag-alert" class="scan-demo" hidden></div>
+    <button type="button" class="btn btn-quiet" id="tag-edit-toggle" aria-pressed="false" aria-controls="tag-edit">Edit demo profile</button>
+    <form id="tag-edit" class="pass-fields" hidden>
+      <label class="field">Pet name <input id="edit-pet" name="pet" autocomplete="off"></label>
+      <label class="field">Breed <input id="edit-breed" name="breed" autocomplete="off"></label>
+      <label class="field wide">Allergies <input id="edit-allergies" name="allergies" autocomplete="off"></label>
+      <label class="field wide">Medications <input id="edit-meds" name="meds" autocomplete="off"></label>
+      <label class="field wide">Owner phone <input id="edit-phone" name="phone" inputmode="tel" autocomplete="off"></label>
+    </form>
+    <p class="disclosure">This is a battery-free QR/NFC smart collar tag. Any smartphone camera can open this page and show the emergency contact and med profile. The tag has no battery, no GPS radio, and no tracking subscription. PawPocket Club is a wellness membership, not pet insurance.</p>
+    <p class="fine">Pass a real profile in the link, for example <a href="tag.html?pet=Milo&amp;breed=Golden%20Retriever">tag.html?pet=Milo&amp;breed=Golden%20Retriever</a>. Allergies, meds, and phone can ride along as <span class="mono">allergies</span>, <span class="mono">meds</span>, and <span class="mono">phone</span>.</p>
+  </article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-disclosure">PawPocket Club is a wellness membership, not pet insurance.</p>
+    <p>Scan alerts in this demo stay inside the browser. A live tag notifies the owner because the page was opened, not because a GPS puck woke up.</p>
+    <p class="footer-meta"><a href="index.html">Back to the hub</a> · © 2026 PawPocket Club</p>
+  </div>
+</footer>
+<script src="assets/funnel.js" defer></script>
+</body>
+</html>
