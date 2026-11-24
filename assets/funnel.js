@@ -187,14 +187,75 @@
       return {
         before: "I agree that today's $29.99 charge is for the Calm & Safe Kit and includes 30 days of PawPocket Club. The membership then renews at $29.99/mo beginning " + whenLabel + ". Recurring charges appear on my statement as " + DESCRIPTOR + ". I can cancel in one click any time before that date at ",
         link: version.cancelPath,
-        after: ". PawPocket Club is a wellness membership, not pet insurance."
+        after: ". PawPocket Club is a wellness membership. It is not insurance and it does not pay claims."
       };
     }
     return {
       before: "I agree that today's $29.99 charge is for the Calm & Safe Kit and includes 30 days of PawPocket Digital Club on Whop. The membership then renews at $19.99/mo beginning " + whenLabel + ". Recurring charges appear on my statement as " + DESCRIPTOR + ". I can cancel in one click any time before that date at ",
       link: version.cancelPath,
-      after: ". PawPocket Club is a wellness membership, not pet insurance. The helper inside this club is AI educational guidance only — not a licensed veterinarian, diagnosis, or emergency replacement."
+      after: ". PawPocket Digital Club is a wellness membership. It is not insurance and it does not pay claims. The helper inside this club is AI educational guidance only — not a licensed veterinarian, diagnosis, or emergency replacement."
     };
+  }
+
+  function formatMonthDay(d) {
+    return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  }
+
+  function addBusinessDays(start, days) {
+    var d = new Date(start.getTime());
+    var left = days;
+    while (left > 0) {
+      d.setDate(d.getDate() + 1);
+      var dow = d.getDay();
+      if (dow !== 0 && dow !== 6) left -= 1;
+    }
+    return d;
+  }
+
+  function fillMembershipDates() {
+    var version = cfg();
+    if (!version) return;
+    var first = addDays(30);
+    var longLabel = formatLong(first);
+    var shortLabel = formatMonthDay(first);
+    document.querySelectorAll("[data-renewal-label]").forEach(function (el) {
+      el.textContent = longLabel;
+    });
+    document.querySelectorAll("[data-renewal-short]").forEach(function (el) {
+      el.textContent = shortLabel;
+    });
+    document.querySelectorAll("[data-renewal-price]").forEach(function (el) {
+      el.textContent = money(version.renewal) + "/mo";
+    });
+  }
+
+  function initDemoNotes() {
+    if (new URLSearchParams(location.search).get("demo") !== "1") return;
+    document.querySelectorAll(".demo-only").forEach(function (el) {
+      el.hidden = false;
+    });
+  }
+
+  function initDelivery() {
+    var el = document.getElementById("delivery-strip");
+    if (!el) return;
+    var today = new Date();
+    today.setHours(12, 0, 0, 0);
+    var ordered = today.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    var handling = el.getAttribute("data-handling-days");
+    var shipText = "+[CONFIRM HANDLING] business days";
+    var arriveText = "[CONFIRM SHIP WINDOW]";
+    if (handling && /^\d+$/.test(handling)) {
+      var ships = addBusinessDays(today, Number(handling));
+      shipText = ships.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      var windowDays = el.getAttribute("data-ship-window-days");
+      if (windowDays && /^\d+$/.test(windowDays)) {
+        var arrives = addBusinessDays(ships, Number(windowDays));
+        arriveText = arrives.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      }
+    }
+    var warehouse = document.body.dataset.version === "b" ? " Ships from a U.S. warehouse." : "";
+    el.textContent = "📦 Ordered: Today (" + ordered + ")  →  🚚 Ships: " + shipText + "  →  🏠 Arrives: " + arriveText + warehouse;
   }
 
   function renderLogEntry(entry) {
@@ -237,9 +298,42 @@
     var duePlan = document.getElementById("due-plan");
     var dueToday = document.getElementById("due-today");
     var dueRenew = document.getElementById("due-renew");
+    var terms = document.getElementById("plain-terms");
     var first = addDays(30);
     var whenLabel = formatLong(first);
     var parts = consentParts(version, whenLabel);
+
+    function kitQty() {
+      var q = form.querySelector('input[name="kit-qty"]:checked');
+      var n = q ? parseInt(q.value, 10) : 1;
+      if (n !== 2 && n !== 3) n = 1;
+      return n;
+    }
+
+    function dueFor(plan) {
+      var base = plan === "vip" ? version.vipToday : version.guestToday;
+      return Math.round((base + version.extraKit * (kitQty() - 1)) * 100) / 100;
+    }
+
+    function refreshDue() {
+      var selected = form.querySelector('input[name="plan"]:checked');
+      if (!selected) {
+        if (duePlan) duePlan.textContent = "None yet";
+        if (dueToday) dueToday.textContent = "—";
+        if (dueRenew) dueRenew.textContent = "Choose VIP or Guest";
+        return;
+      }
+      var qLabel = kitQty() > 1 ? " · " + kitQty() + " kits" : "";
+      if (selected.value === "vip") {
+        duePlan.textContent = "VIP" + qLabel;
+        dueToday.textContent = money(dueFor("vip"));
+        dueRenew.textContent = money(version.renewal) + "/mo starting " + whenLabel;
+      } else {
+        duePlan.textContent = "Guest" + qLabel;
+        dueToday.textContent = money(dueFor("guest"));
+        dueRenew.textContent = "No renewal. One-time kit purchase.";
+      }
+    }
 
     function renderConsent() {
       copy.textContent = "";
@@ -269,10 +363,9 @@
       radios.forEach(function (r) { r.checked = false; });
       if (consent) consent.checked = false;
       if (panel) panel.hidden = true;
+      if (terms) terms.hidden = true;
       clearError();
-      if (duePlan) duePlan.textContent = "None yet";
-      if (dueToday) dueToday.textContent = "—";
-      if (dueRenew) dueRenew.textContent = "Choose VIP or Guest";
+      refreshDue();
       syncExpress();
     }
 
@@ -311,17 +404,15 @@
         clearError();
         var vip = radio.value === "vip" && radio.checked;
         panel.hidden = !vip;
+        if (terms) terms.hidden = !vip;
         if (!vip && consent) consent.checked = false;
-        if (radio.value === "vip") {
-          duePlan.textContent = "VIP";
-          dueToday.textContent = money(version.vipToday);
-          dueRenew.textContent = money(version.renewal) + "/mo starting " + whenLabel;
-        } else {
-          duePlan.textContent = "Guest";
-          dueToday.textContent = money(version.guestToday);
-          dueRenew.textContent = "No renewal. One-time kit purchase.";
-        }
+        refreshDue();
         syncExpress();
+      });
+    });
+    form.querySelectorAll('input[name="kit-qty"]').forEach(function (qty) {
+      qty.addEventListener("change", function () {
+        refreshDue();
       });
     });
     if (consent) consent.addEventListener("change", syncExpress);
@@ -385,11 +476,15 @@
             checkboxAccepted: false
           };
 
+      var qtyNow = kitQty();
+      var extraPrice = Math.round(version.extraKit * (qtyNow - 1) * 100) / 100;
       var order = {
         version: version.id,
         plan: selected.value,
         kitName: "Calm & Safe Kit",
         kitPrice: selected.value === "vip" ? version.vipToday : version.guestToday,
+        kitQty: qtyNow,
+        extraKitPrice: extraPrice,
         renewalAmount: selected.value === "vip" ? version.renewal : null,
         firstBillingDate: selected.value === "vip" ? isoDate(first) : null,
         firstBillingLabel: selected.value === "vip" ? whenLabel : null,
@@ -411,16 +506,16 @@
       writeJSON(version.logKey, log);
       trackMeta("AddToCart", {
         currency: "USD",
-        value: order.kitPrice,
+        value: dueFor(selected.value),
         content_ids: ["calm-safe-kit"],
         content_type: "product",
         content_name: "Calm & Safe Kit",
-        contents: [{ id: "calm-safe-kit", quantity: 1 }]
+        contents: [{ id: "calm-safe-kit", quantity: qtyNow }]
       });
       trackMeta("InitiateCheckout", {
         currency: "USD",
-        value: order.kitPrice,
-        num_items: 1,
+        value: dueFor(selected.value),
+        num_items: qtyNow,
         content_ids: ["calm-safe-kit"]
       });
       openLog(true);
@@ -488,8 +583,14 @@
       });
     }
 
+    var qty = Number(order.kitQty) || 1;
+    if (qty !== 1 && !order.upsellComplete && order.upsellStep !== 2) {
+      order = Object.assign({}, order, { oto1: false, oto1Price: 0, upsellStep: 2 });
+      saveOrder(order);
+    }
+
     if (order.upsellComplete) show("done");
-    else if (order.upsellStep === 2) show(2);
+    else if (order.upsellStep === 2 || qty !== 1) show(2);
     else show(1);
 
     function go(step, patch) {
@@ -535,7 +636,8 @@
       breed: document.getElementById("pet-breed"),
       allergies: document.getElementById("pet-allergies"),
       meds: document.getElementById("pet-meds"),
-      phone: document.getElementById("pet-phone")
+      phone: document.getElementById("pet-phone"),
+      er: document.getElementById("pet-er")
     };
     var saved = (order && order.petPass) || {};
     Object.keys(fields).forEach(function (key) {
@@ -548,8 +650,9 @@
         breed: fields.breed ? fields.breed.value.trim() : "",
         allergies: fields.allergies ? fields.allergies.value.trim() : "",
         meds: fields.meds ? fields.meds.value.trim() : "",
-        phone: fields.phone ? fields.phone.value.trim() : ""
-      };
+      phone: fields.phone ? fields.phone.value.trim() : "",
+      er: fields.er ? fields.er.value.trim() : ""
+    };
     }
 
     function shown() {
@@ -654,7 +757,58 @@
       ctx.font = '500 18px "Plus Jakarta Sans", sans-serif';
       wrapText(ctx, "Battery-free QR/NFC tag. No GPS radio in the collar tag.", 828, 300, 264, 26);
       ctx.fillStyle = "#FAF7F2";
-      wrapText(ctx, "Wellness membership card. Not pet insurance and not a clinic chart.", 828, 430, 264, 26);
+      wrapText(ctx, "Wellness membership card. It is not insurance and it does not pay claims.", 828, 400, 264, 26);
+    }
+
+    function drawFridge() {
+      var fridge = document.getElementById("fridge-canvas");
+      if (!fridge) return;
+      var pet = raw();
+      var name = pet.name || "Your dog";
+      var phone = pet.phone || "Add a phone";
+      var allergies = pet.allergies || "None listed";
+      var meds = pet.meds || "None listed";
+      var er = pet.er || "____";
+      var w = 1000;
+      var h = 1400;
+      fridge.width = w;
+      fridge.height = h;
+      var ctx = fridge.getContext("2d");
+      ctx.fillStyle = "#FAF7F2";
+      ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = "#1B4332";
+      ctx.fillRect(0, 0, w, 200);
+      ctx.fillStyle = "#FAF7F2";
+      ctx.font = '700 34px "Plus Jakarta Sans", sans-serif';
+      ctx.fillText("PAWPOCKET CLUB", 64, 84);
+      ctx.font = '560 40px Fraunces, Georgia, serif';
+      ctx.fillText("Fridge Emergency Card", 64, 146);
+      ctx.fillStyle = "#1F2421";
+      ctx.font = '680 72px Fraunces, Georgia, serif';
+      ctx.fillText(clip(ctx, name, 870), 64, 320);
+      var rows = [
+        ["OWNER PHONE", phone],
+        ["ALLERGIES", allergies],
+        ["MEDS", meds],
+        ["NEAREST 24H ER", er]
+      ];
+      var y = 400;
+      rows.forEach(function (row) {
+        ctx.fillStyle = "#5A635E";
+        ctx.font = '700 22px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText(row[0], 64, y);
+        ctx.fillStyle = "#1F2421";
+        ctx.font = '650 40px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText(clip(ctx, row[1], 870), 64, y + 54);
+        y += 150;
+      });
+      ctx.fillStyle = "#1B4332";
+      ctx.font = '600 30px "Plus Jakarta Sans", sans-serif';
+      var edition = cfg();
+      var foot = edition && edition.id === "b"
+        ? "AI educational helper. Not a vet."
+        : "24/7 licensed veterinary guidance, triage, and second opinions.";
+      wrapText(ctx, foot, 64, y + 10, 870, 42);
     }
 
     function persist() {
@@ -686,6 +840,7 @@
 
     function paint() {
       draw();
+      drawFridge();
       persist();
     }
     paint();
@@ -705,6 +860,21 @@
         a.remove();
       });
     }
+    var fridgeDownload = document.getElementById("fridge-download");
+    if (fridgeDownload) {
+      fridgeDownload.addEventListener("click", function () {
+        drawFridge();
+        var fridge = document.getElementById("fridge-canvas");
+        var pet = shown();
+        var a = document.createElement("a");
+        a.href = fridge.toDataURL("image/png");
+        var slug = pet.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "pet";
+        a.download = "pawpocket-" + slug + "-fridge-card.png";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+    }
   }
 
   function initThanks() {
@@ -718,13 +888,25 @@
     var totalEl = document.getElementById("receipt-total");
     var meta = document.getElementById("receipt-meta");
     var rebill = document.getElementById("rebill-note");
+    var save = document.getElementById("save-renewal");
+    if (save) {
+      if (order && order.plan === "vip" && !order.oto2) {
+        save.textContent = "📅 Your renewal date: " + order.firstBillingLabel + ". " + money(order.renewalAmount) + "/mo, billed as " + DESCRIPTOR + ".";
+      } else if (order && order.oto2) {
+        save.textContent = "📅 Annual plan is on this order and replaces the monthly renewal. Later yearly charges are billed as " + DESCRIPTOR + ".";
+      } else if (order && order.plan === "guest") {
+        save.textContent = "📅 Guest order: nothing renews.";
+      } else {
+        save.textContent = "📅 Your renewal date appears here after a VIP checkout.";
+      }
+    }
 
     if (!order || !order.plan) {
       if (empty) empty.hidden = false;
       if (receipt) receipt.hidden = true;
     } else {
       if (!order.purchaseTracked) {
-        var purchaseValue = Number(order.kitPrice) + (order.oto1 ? Number(order.oto1Price) : 0) + (order.oto2 ? Number(order.annualPrice) : 0);
+        var purchaseValue = Number(order.kitPrice) + Number(order.extraKitPrice || 0) + (order.oto1 ? Number(order.oto1Price) : 0) + (order.oto2 ? Number(order.annualPrice) : 0);
         trackMeta("Purchase", {
           currency: "USD",
           value: Math.round(purchaseValue * 100) / 100,
@@ -738,7 +920,9 @@
       }
       if (empty) empty.hidden = true;
       if (receipt) receipt.hidden = false;
+      var kitCount = Number(order.kitQty) || 1;
       var rows = [["Calm & Safe Kit (" + (order.plan === "vip" ? "VIP" : "Guest") + ")", order.kitPrice]];
+      if (kitCount > 1 && order.extraKitPrice) rows.push([(kitCount - 1) + " extra kit" + (kitCount > 2 ? "s" : "") + " — same order", order.extraKitPrice]);
       if (order.oto1) rows.push(["Extra Calm & Safe Kit — same box, up to 3 pets on one membership", order.oto1Price]);
       if (order.oto2) rows.push(["Annual " + version.clubName, order.annualPrice]);
       lines.textContent = "";
@@ -781,13 +965,13 @@
         var h = document.createElement("h3");
         var p = document.createElement("p");
         if (order.plan === "vip" && !order.oto2) {
-          h.textContent = "Day-25 pre-rebill reminder";
-          p.textContent = "On " + formatLong(addDays(25)) + " — day 25 of the 30 days included today — a live membership sends a plain-language reminder before the first " + money(version.renewal) + "/mo charge posts on " + order.firstBillingLabel + ". The note names the amount, the date, the descriptor " + DESCRIPTOR + ", and a direct link to the one-click cancellation page. This static demo does not send email.";
+          h.textContent = "Before the first renewal";
+          p.textContent = "[CONFIRM: reminder email wired] The first " + money(version.renewal) + "/mo charge is " + order.firstBillingLabel + ", billed as " + DESCRIPTOR + ". Cancel in 1 click any time before then. A day-25 reminder email is not confirmed as wired.";
         } else if (order.oto2) {
           h.textContent = "Annual plan, no monthly rebill";
-          p.textContent = "The annual lock-in replaces the monthly renewal. A live club would still send a plain reminder before the next yearly charge. You can cancel in one click any time before then. This demo does not send email.";
+          p.textContent = "The annual lock-in replaces the monthly renewal. [CONFIRM: reminder email wired] You can cancel in 1 click any time before the next yearly charge.";
         } else {
-          h.textContent = "No pre-rebill on a guest kit";
+          h.textContent = "No renewal on a guest kit";
           p.textContent = "A Guest order is one-time. Nothing renews, so there is no day-25 reminder unless a membership is added later.";
         }
         rebill.appendChild(h);
@@ -1088,7 +1272,7 @@
       },
       "3": {
         h1: "Your Dog Ate Something. Here Is the $29.99 Next Move.",
-        lede: "A USB-C steam brush, a suction lick mat, and a battery-free QR tag. Plus licensed veterinary guidance, triage, and a second opinion — not a prescription, and not pet insurance."
+        lede: "A USB-C steam brush, a suction lick mat, and a battery-free QR tag. Plus licensed veterinary guidance, triage, and a second opinion — not a prescription. It is not insurance and it does not pay claims."
       }
     },
     "b:advertorial": {
@@ -1107,8 +1291,8 @@
     },
     "a:product": {
       "1": {
-        h1: "The kit on the counter. The club on your phone.",
-        lede: "VIP is $29.99 today for the kit and 30 days of PawPocket Club, then $29.99/mo. Guest is $49.99 once. Neither choice is selected."
+        h1: "Your Dog Just Ate Something. It's 11 PM. Who Do You Call?",
+        lede: "Get the Calm & Safe Kit for $29.99 with VIP ($20 less than Guest) plus 30 days of 24/7 licensed veterinary guidance, triage, and second opinions. Then $29.99/mo. Cancel in 1 click."
       },
       "2": {
         h1: "Same Kit. $20 Less Today If You Take the Club.",
@@ -1121,8 +1305,8 @@
     },
     "b:product": {
       "1": {
-        h1: "The kit on the counter. The club on your phone.",
-        lede: "VIP is $29.99 today for the kit and 30 days on Whop, then $19.99/mo. Guest is $49.99 once. Nothing is pre-selected."
+        h1: "\"Is That Toxic?\" Stop Googling at Midnight.",
+        lede: "Get the Calm & Safe Kit for $29.99 with VIP ($20 less than Guest) plus 30 days of the 24/7 AI Pet Symptom & Toxic-Food Educational Helper. Then $19.99/mo. Cancel in 1 click. AI educational guidance only. Not a veterinarian."
       },
       "2": {
         h1: "Same Kit. $20 Less Today. Then $19.99/mo If You Stay.",
@@ -1212,6 +1396,9 @@
   document.addEventListener("DOMContentLoaded", function () {
     mountBar();
     applyHeadlines();
+    fillMembershipDates();
+    initDemoNotes();
+    initDelivery();
     initMetaPage();
     initTabs();
     initGallery();

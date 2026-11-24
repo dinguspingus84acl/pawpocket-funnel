@@ -5,9 +5,9 @@ A mobile-first, GitHub Pages–ready funnel for **PawPocket Club**. One static s
 - **Version A — Full Vet-Backed Edition** at **$29.99/mo**, once B2B veterinary partners are contracted. 24/7 licensed veterinary guidance, triage, and second opinions, plus a veterinary discount plan at participating clinics.
 - **Version B — Zero-Outreach Fast-Launch Edition** at **$19.99/mo** on Whop. AI educational helper, Wallet Pet ID, QR scan alerts, and a Breed Care Vault. No live veterinarians and no clinic discounts.
 
-The physical offer in both funnels is the 3-piece **Calm & Safe Kit** (steam deshedding brush, suction lick mat, battery-free QR/NFC collar tag). VIP pays **$29.99** today and receives 30 days of the club. Guest pays **$49.99** once and does not renew.
+The physical offer in both funnels is the 3-piece **Calm & Safe Kit** (steam deshedding brush, suction lick mat, battery-free QR/NFC collar tag). VIP pays **$29.99** today and receives 30 days of the club. Guest pays **$49.99** once and does not renew. **[CONFIRM: Guest $49.99]** until that one-time price is signed off.
 
-PawPocket Club is a wellness membership, not pet insurance.
+PawPocket Club is a wellness membership. It is not insurance and it does not pay claims.
 
 ## Run it locally
 
@@ -27,7 +27,8 @@ Push the repository and set Pages to deploy from the **root** of the branch. `.n
 
 | Page | Version A | Version B |
 | --- | --- | --- |
-| Hub | [index.html](index.html) | — |
+| Hub | [index.html](index.html) | [lite/index.html](lite/index.html) redirects to the journal |
+| VIP benefits | [club.html](club.html) | [lite/club.html](lite/club.html) |
 | Journal | [advertorial.html](advertorial.html) | [lite/advertorial.html](lite/advertorial.html) |
 | 5 reasons | [listicle.html](listicle.html) | [lite/listicle.html](lite/listicle.html) |
 | Checkout | [product.html](product.html) | [lite/product.html](lite/product.html) |
@@ -56,10 +57,27 @@ On both product pages:
 
 1. VIP and Guest radios start **unselected**.
 2. VIP reveals a **separate, unchecked** recurring-consent box. The text names the renewal (`$29.99/mo` or `$19.99/mo`), the first billing date (today + 30 days), the descriptor `PAWPOCKETCLUB*MEMBER`, and the one-click cancel page.
-3. **Complete Order** writes a consent receipt to `sessionStorage` (plan, exact text, ISO time, receipt ID) and opens **View Underwriting Consent Log**.
+3. **Complete Order** writes a consent receipt to `sessionStorage` (plan, exact text, ISO time, receipt ID) and opens **View my order consent receipt**.
 4. Guest orders do not ask for recurring consent.
 
-Nothing on this site charges a card. Hook the same screen to a processor when you are ready, and keep the consent payload.
+Nothing on this site charges a card. Hook the same screen to a processor when you are ready, and keep the consent payload. The footer line "Static demo checkout — no card is charged on this site" stays hidden unless the URL has `?demo=1`.
+
+Kit quantity defaults to 1 and is not a consent item. Two kits add $19.99 and three add $39.98. The second-kit upsell appears only when quantity is 1.
+
+## Still unconfirmed
+
+These stay as visible placeholders. Do not invent the missing numbers.
+
+- **[CONFIRM GUARANTEE TERMS]** — window, who pays return shipping, and whether an opened brush qualifies. Jack still has to confirm those before the guarantee is advertised. Do not put that sentence in an ad until the words are final.
+- **[CONFIRM: Guest $49.99]**
+- **[CONFIRM HANDLING]** business days and **[CONFIRM SHIP WINDOW]**
+- Specs: **[CONFIRM battery/run time]** and **[CONFIRM size]**
+- **[CONFIRM SLA]** and **[INSERT LOCAL ER EXAM FEE + SOURCE]** on the journal comparison
+- **[CONFIRM: reminder email wired]** on the day-25 step. Do not promise the reminder email until the billing backend actually sends it.
+- **[CONFIRM: you keep access until the end of the period you already paid for.]**
+- **[INSERT REAL CUSTOMER STORY]** — three empty cards on checkout. No stars and no counts.
+
+Shopper pages do not say that a page "does not place a call" or that the static checkout "does not connect you to a veterinarian." Those notes live in HTML comments on the Version A checkout.
 
 ## Cancel
 
@@ -68,7 +86,7 @@ Nothing on this site charges a card. Hook the same screen to a processor when yo
 ## What this site will not do
 
 - Invent reviews, star ratings, press logos, member counts, or countdown timers. Empty slots are marked `[INSERT REAL CUSTOMER STORY]` and `[INSERT REAL REVIEW BEFORE LAUNCH]`.
-- Call the membership pet insurance, or describe a self-funded emergency fund.
+- Call the membership insurance, or describe a self-funded emergency fund. The shopper-facing line is: "It is not insurance and it does not pay claims."
 - Claim GPS on the collar tag. It is a battery-free QR/NFC tag.
 - Promise online prescriptions or a diagnosis where a state VCPR does not allow it (Version A).
 - Claim live veterinarians or clinic discounts anywhere under `lite/` (Version B).

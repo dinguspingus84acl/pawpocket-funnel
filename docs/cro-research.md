@@ -7,7 +7,7 @@ The offer this research is applied to:
 - Same 3-piece Calm & Safe Kit on both funnels (USB-C steam deshedding brush, food-grade silicone suction lick mat, battery-free QR/NFC collar tag).
 - VIP pays **$29.99 today** and gets 30 days of the club. Guest pays **$49.99 once** and does not renew.
 - Version A then renews at **$29.99/mo**. Version B (Whop digital club) renews at **$19.99/mo**.
-- PawPocket Club is a wellness membership, not pet insurance. The tag has no GPS radio.
+- PawPocket Club is a wellness membership. It is not insurance and it does not pay claims. The tag has no GPS radio. Guest checkout is [CONFIRM: Guest $49.99].
 
 ## 1. Advertorials and listicles for cold traffic
 
