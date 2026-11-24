@@ -5,7 +5,7 @@ A mobile-first, GitHub Pages–ready funnel for **PawPocket Club**. One static s
 - **Version A — Full Vet-Backed Edition** at **$29.99/mo**, once B2B veterinary partners are contracted. 24/7 licensed veterinary guidance, triage, and second opinions, plus a veterinary discount plan at participating clinics.
 - **Version B — Zero-Outreach Fast-Launch Edition** at **$19.99/mo** on Whop. AI educational helper, Wallet Pet ID, QR scan alerts, and a Breed Care Vault. No live veterinarians and no clinic discounts.
 
-The physical offer in both funnels is the 3-piece **Calm & Safe Kit** (steam deshedding brush, suction lick mat, battery-free QR/NFC collar tag). VIP pays **$29.99** today and receives 30 days of the club. Guest pays **$49.99** once and does not renew. **[CONFIRM: Guest $49.99]** until that one-time price is signed off.
+The physical offer in both funnels is the 3-piece **Calm & Safe Kit** (steam deshedding brush, suction lick mat, battery-free QR/NFC collar tag). VIP pays **$29.99** today and receives 30 days of the club. Guest pays **$49.99** once and does not renew.
 
 PawPocket Club is a wellness membership. It is not insurance and it does not pay claims.
 
@@ -69,7 +69,6 @@ Kit quantity defaults to 1 and is not a consent item. Two kits add $19.99 and th
 These stay as visible placeholders. Do not invent the missing numbers.
 
 - **[CONFIRM GUARANTEE TERMS]** — window, who pays return shipping, and whether an opened brush qualifies. Jack still has to confirm those before the guarantee is advertised. Do not put that sentence in an ad until the words are final.
-- **[CONFIRM: Guest $49.99]**
 - **[CONFIRM HANDLING]** business days and **[CONFIRM SHIP WINDOW]**
 - Specs: **[CONFIRM battery/run time]** and **[CONFIRM size]**
 - **[CONFIRM SLA]** and **[INSERT LOCAL ER EXAM FEE + SOURCE]** on the journal comparison
