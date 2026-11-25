@@ -55,19 +55,19 @@ Cold traffic does not see the Funnel Switcher. It was shifting the page and leak
 
 On both product pages:
 
-1. The kit price is **$49.99**. Quantity defaults to 1.
-2. One **unchecked** checkbox adds optional VIP: club is $0.00 today, then `$29.99/mo` or `$19.99/mo`. Checking it also shows the VIP kit price of **$29.99**.
-3. The terms under the box name the renewal amount, the first billing date, `PAWPOCKETCLUB*MEMBER`, and the one-click cancel page, at 14px.
-4. **Pay now** writes that consent to `sessionStorage` and continues to add-ons. An unchecked box is a one-time kit with no recurring line.
+1. The purchase choice is two cards. **VIP** is highlighted and preselected: **$29.99** for the kit plus 30 days of VIP free, then `$29.99/mo` or `$19.99/mo`. **One-time purchase** is **$49.99**.
+2. The terms line above the button stays visible while VIP is selected. It names `$0 today for membership`, the renewal amount, `Dec 24, 2026`, `PAWPOCKETCLUB*MEMBER`, and the one-click cancel page, at 14px.
+3. An optional extra QR/NFC pet tag is **+$9.99**, with a quantity stepper that starts at 0. The kit itself is one reusable set.
+4. **Buy VIP** or **Buy once** writes that choice to `sessionStorage` and continues to add-ons. One-time purchase has no recurring line.
 
 Nothing on this site charges a card. Hook the same screen to a processor when you are ready, and keep the consent payload. The footer line "Static demo checkout — no card is charged on this site" stays hidden unless the URL has `?demo=1`.
 
-Kit quantity defaults to 1 and is not a consent item. Two kits add $19.99 and three add $39.98. The second-kit upsell appears only when quantity is 1.
+The first add-on is another battery-free tag at $9.99. It is skipped when the order already includes extra tags.
 
 ## Defaults Jack can edit later
 
 - **Guarantee:** 60-Day Happy Pet Guarantee. Full refund on the kit if you're not happy, no need to send it back.
-- **Shipping:** Ships in 1-2 business days. Delivered in 3-7 business days (US). Free shipping on 2+ kits. The PDP fills a real arrival range from today.
+- **Shipping:** Ships in 1-2 business days. Delivered in 3-7 business days (US). Free US shipping. The PDP fills a real arrival range from today.
 - **Reminder:** We email you a reminder 5 days before each renewal.
 - **Version A response:** Typical response in under 15 minutes, 24/7.
 - **Version B response:** Instant AI guidance answer. AI educational guidance only.

@@ -1002,6 +1002,54 @@ article.wrap > p,
 body { overflow-x: clip; }
 .vs-wrap, .story-scroller { max-width: 100%; }
 .sticky-cta .btn { white-space: nowrap; }
+.sticky-cta.is-docked-away { display: none; }
+.nl-box { border: 1px solid #f0f0f0; border-radius: 16px; padding: 16px; background: #fff; }
+.nl-title { text-align: center; font-weight: 700; margin: 0 0 12px; }
+.nl-option {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 0 0 10px;
+  background: #fff;
+  cursor: pointer;
+}
+.nl-option:has(input:checked) { border-color: #f6b2cb; background: #fff0f7; }
+.nl-option input { position: absolute; opacity: 0; width: 18px; height: 18px; }
+.nl-dot { width: 16px; height: 16px; border: 2px solid #ccc; border-radius: 50%; margin-top: 3px; }
+.nl-option:has(input:checked) .nl-dot { border-color: #e89fbb; box-shadow: inset 0 0 0 4px #e89fbb; }
+.nl-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.nl-name { font-weight: 700; font-size: 16px; }
+.nl-sub { display: block; font-size: 13px; color: #666; margin-top: 2px; }
+.nl-badge { background: #ffe5ee; color: #000; border: 1px solid #f6b2cb; border-radius: 999px; font-size: 11px; font-weight: 700; padding: 4px 8px; }
+.nl-price { text-align: right; }
+.nl-price strong { display: block; font-size: 16px; }
+.nl-price span { font-size: 13px; color: #666; }
+.nl-atc {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 14px;
+  background: #ffeef5;
+  border: 1px solid #e89fbb;
+  border-radius: 12px;
+  color: #121212;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+.nl-atc:hover { background: #fddae8; }
+.nl-guarantee { margin: 10px 0 0; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+.tag-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 6px; font-size: 14px; }
+.tag-row span { display: block; color: #666; }
+.stepper { display: flex; align-items: center; gap: 8px; }
+.stepper button { width: 44px; height: 44px; border: 1px solid #e6e6e6; background: #fff; border-radius: 8px; font-size: 20px; cursor: pointer; }
+.cart-line { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid #eee; padding: 8px 0; margin: 0; }
 .product-card strong { display: block; margin-top: 8px; }
 .gift-line { background: #fff4e8; border-radius: 4px; padding: 10px 12px; font-weight: 650; }
 .num-steps { display: grid; gap: 12px; }

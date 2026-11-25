@@ -49,16 +49,10 @@
     <p class="fine" id="price-caption">VIP price</p>
     <p id="vip-price-line">VIP price <strong>$29.99</strong>. The one-time kit price is $49.99.</p>
     <p class="gift-line">Included free: Printable Fridge Emergency Card + Wallet Pet ID · $0.00</p>
-    <fieldset class="qty-stack">
-      <legend>Kits</legend>
-      <label class="qty-option"><input type="radio" name="kit-qty" value="1" checked> 1 kit</label>
-      <label class="qty-option"><input type="radio" name="kit-qty" value="2"> 2 kits +$19.99</label>
-      <label class="qty-option"><input type="radio" name="kit-qty" value="3"> 3 kits +$39.98</label>
-    </fieldset>
-    <p class="fine">This batch ships in 1-2 business days. Free shipping on 2+ kits. One optional membership covers up to 3 pets.</p>
+    <p class="fine">This batch ships in 1–2 business days. Free US shipping. The kit is one reusable set.</p>
     <dl class="due" id="order-summary">
       <div><dt id="sum-kit-label">Calm &amp; Safe Kit (VIP price)</dt><dd id="sum-kit-price">$29.99</dd></div>
-      <div id="sum-extra" hidden><dt id="sum-extra-label">Extra kits</dt><dd id="sum-extra-price">$0.00</dd></div>
+      <div id="sum-extra" hidden><dt id="sum-extra-label">Extra QR/NFC tags</dt><dd id="sum-extra-price">$0.00</dd></div>
       <div id="sum-vip"><dt>VIP Club (30-day free trial)</dt><dd>$0.00 today</dd></div>
       <div><dt>Due today</dt><dd id="due-today">$29.99</dd></div>
       <div><dt>Renews</dt><dd id="due-renew">$29.99/mo starting Dec 24, 2026</dd></div>
@@ -66,13 +60,14 @@
     <label class="field">Email for the receipt
       <input type="email" id="order-email" name="email" autocomplete="email" placeholder="you@example.com">
     </label>
-    <fieldset class="offer-picker">
-      <legend class="sr-only">Purchase option</legend>
-      <label class="offer-card">
+    <div class="nl-box" id="bundle-widget">
+      <p class="nl-title">Choose your price</p>
+      <label class="nl-option">
         <input type="radio" name="purchase" value="vip" checked>
-        <span>
-          <span class="popular">MOST POPULAR</span>
-          <span class="offer-title">VIP PRICE: $29.99 kit + 30 days of VIP free</span>
+        <span class="nl-dot" aria-hidden="true"></span>
+        <span class="nl-copy">
+          <span class="nl-top"><span class="nl-name">VIP</span><span class="nl-badge">MOST POPULAR</span></span>
+          <span class="nl-sub">$29.99 kit + 30 days of VIP free</span>
           <ul class="vip-perks">
             <li>24/7 licensed veterinary guidance, triage, and second opinions. Typical response in under 15 minutes, 24/7.</li>
             <li>Veterinary discount plan at participating clinics</li>
@@ -80,15 +75,33 @@
             <li>Up to 3 pets. <a href="club.html">See perks</a></li>
           </ul>
         </span>
+        <span class="nl-price"><strong>$29.99</strong><span>today</span></span>
       </label>
-      <label class="offer-card">
+      <label class="nl-option">
         <input type="radio" name="purchase" value="guest">
-        <span class="offer-title">One-time purchase: $49.99</span>
+        <span class="nl-dot" aria-hidden="true"></span>
+        <span class="nl-copy">
+          <span class="nl-top"><span class="nl-name">One-time purchase</span></span>
+          <span class="nl-sub">Kit only. Nothing renews.</span>
+        </span>
+        <span class="nl-price"><strong>$49.99</strong><span>once</span></span>
       </label>
-    </fieldset>
-    <p class="vip-terms" id="vip-terms">VIP: $0 today for membership, then $29.99/mo starting Dec 24, 2026 until you cancel. Billed as PAWPOCKETCLUB*MEMBER. Cancel anytime in <a href="cancel.html">1 click</a>.</p>
-    <button type="submit" class="btn btn-cta btn-block" id="pay-btn">Buy VIP — $29.99</button>
-    <p class="guarantee-pill">60-Day Happy Pet Guarantee: full refund on the kit if you're not happy, no need to send it back.</p>
+      <div class="tag-row">
+        <div>
+          <strong>Extra QR/NFC pet tag for another pet</strong>
+          <span>+$9.99</span>
+        </div>
+        <div class="stepper">
+          <button type="button" id="tag-minus" aria-label="Fewer extra tags">−</button>
+          <span id="tag-qty">0</span>
+          <input type="hidden" id="tag-qty-input" name="tag-qty" value="0">
+          <button type="button" id="tag-plus" aria-label="More extra tags">+</button>
+        </div>
+      </div>
+    </div>
+    <p class="vip-terms" id="vip-terms">$0 today for membership, then $29.99/mo starting Dec 24, 2026 until you cancel. Billed as PAWPOCKETCLUB*MEMBER. Cancel anytime in <a href="cancel.html">1 click</a>.</p>
+    <button type="submit" class="nl-atc" id="pay-btn">Buy VIP — $29.99</button>
+    <p class="nl-guarantee">60-Day Happy Pet Guarantee: full refund on the kit if you're not happy, no need to send it back.</p>
     <div class="trust-row" aria-label="Payment marks">
       <svg class="pay-mark" viewBox="0 0 48 32" role="img" aria-label="Visa"><rect width="48" height="32" rx="2" fill="#1a1f71"/><text x="24" y="21" text-anchor="middle" fill="#fff" font-size="11" font-family="Arial" font-weight="700">VISA</text></svg>
       <svg class="pay-mark" viewBox="0 0 48 32" role="img" aria-label="Mastercard"><rect width="48" height="32" rx="2" fill="#fff" stroke="#e6e6e6"/><circle cx="20" cy="16" r="7" fill="#eb001b"/><circle cx="28" cy="16" r="7" fill="#f79e1b"/></svg>
@@ -98,7 +111,7 @@
       <svg class="pay-mark" viewBox="0 0 48 32" role="img" aria-label="Shop Pay"><rect width="48" height="32" rx="2" fill="#5a31f4"/><text x="24" y="20" text-anchor="middle" fill="#fff" font-size="8" font-family="Arial" font-weight="700">Shop</text></svg>
       <span class="trust-label">Secure checkout</span>
     </div>
-    <p class="delivery-strip" id="delivery-strip">Ships in 1-2 business days. Delivered in 3-7 business days (US). Free shipping on 2+ kits.</p>
+    <p class="delivery-strip" id="delivery-strip">Ships in 1-2 business days. Delivered in 3-7 business days (US). Free US shipping.</p>
     <p id="checkout-error" class="form-error" role="alert" hidden></p>
   </form>
 </section>
@@ -128,7 +141,7 @@
     </ul>
   </div>
   <div role="tabpanel" id="panel-ship" aria-labelledby="tab-ship" hidden>
-    <p>Ships in 1-2 business days. Delivered in 3-7 business days (US). Free shipping on 2+ kits. VIP renewals ship nothing, so renewal shipping is $0.</p>
+    <p>Ships in 1-2 business days. Delivered in 3-7 business days (US). Free US shipping. VIP renewals ship nothing, so renewal shipping is $0.</p>
     <p>60-Day Happy Pet Guarantee: full refund on the kit if you're not happy, no need to send it back.</p>
   </div>
 </section>
@@ -163,7 +176,7 @@
 <section class="wrap section">
   <h2>How it works</h2>
   <div class="num-steps">
-    <article><span>01</span><h3>Choose the kits</h3><p>1, 2, or 3. One is already selected. That is a quantity, not a membership.</p></article>
+    <article><span>01</span><h3>Choose VIP or one-time</h3><p>VIP is highlighted. One kit is the whole product. An extra tag is optional and starts at zero.</p></article>
     <article><span>02</span><h3>Pick VIP or one-time</h3><p>VIP price is already highlighted. The renewal line sits in plain type above the button. Choose one-time if you only want the kit.</p></article>
     <article><span>03</span><h3>Use it</h3><p>Brush, bathe, tag. If you added VIP, the club starts today and renews later. Renewals ship nothing.</p></article>
   </div>
@@ -177,20 +190,20 @@
     <article class="story-slot"><span class="slot-label">Sample story</span><p><strong>Andre P. · Columbus, OH</strong> Bath night used to be a two-person job. The lick mat stuck to the tile, the Lab stayed busy, and I finished a rinse without wrestling.</p></article>
     <article class="story-slot"><span class="slot-label">Sample story</span><p><strong>Priya S. · Portland, OR</strong> The gate was open for half a minute. A neighbor scanned the tag with the camera already in their phone. No battery in the tag, and no map to pay for.</p></article>
     <article class="story-slot"><span class="slot-label">Sample story</span><p><strong>Luis G. · Tampa, FL</strong> Midnight, a sock, and a dog who would not tell me how much. The kit was the thing I could actually put my hands on. The scary questions stayed a checkbox I did not have to check.</p></article>
-    <article class="story-slot"><span class="slot-label">Sample story</span><p><strong>Helen W. · Denver, CO</strong> Two shepherds, one sofa. The second kit came in the same kind of box, and free shipping on two kits was the part I actually felt.</p></article>
+    <article class="story-slot"><span class="slot-label">Sample story</span><p><strong>Helen W. · Denver, CO</strong> One kit by the door, and a second battery-free tag for the other dog. The tag does not track anyone.</p></article>
     <article class="story-slot"><span class="slot-label">Sample story</span><p><strong>Noah B. · Chicago, IL</strong> Our cat found a sugar-free jar. The mat is for the bath, not for guessing. I still called our own vet. The tag on the collar is battery-free, and it does not track her.</p></article>
   </div>
 </section>
 <section class="wrap section">
   <h2>Questions</h2>
   <details class="faq"><summary>What is $49.99?</summary><p>The Calm &amp; Safe Kit, once. Brush, mat, and battery-free tag, plus the $0 fridge card and wallet pet ID.</p></details>
-  <details class="faq"><summary>Is the VIP club a recurring charge?</summary><p>Yes, if you check the box. It is $0.00 today, then $29.99/mo beginning December 24, 2026, billed as PAWPOCKETCLUB*MEMBER, until you cancel in 1 click at <a href="cancel.html">cancel.html</a>. Leave the box empty and the kit never renews. Checking the box also shows the VIP kit price of $29.99.</p></details>
+  <details class="faq"><summary>Is the VIP club a recurring charge?</summary><p>Yes, when VIP price is selected. It is $0 today for membership, then $29.99/mo starting Dec 24, 2026, billed as PAWPOCKETCLUB*MEMBER, until you cancel in 1 click at <a href="cancel.html">cancel.html</a>. One-time purchase is $49.99 and never renews.</p></details>
   <details class="faq"><summary>Does a renewal ship another kit?</summary><p>No. The rebill ships no physical product. Shipping on renewals is $0.</p></details>
   <details class="faq"><summary>Does the tag use GPS?</summary><p>No. Battery-free QR/NFC. Any smartphone camera. No tracking subscription.</p></details>
   <details class="faq"><summary>Will a veterinarian prescribe online?</summary><p>No. If you add VIP, access is 24/7 licensed veterinary guidance, triage, and second opinions. It is not an online prescription and it is not a legal diagnosis where a state veterinary-client-patient relationship does not allow one.</p></details>
   <details class="faq"><summary>Is this insurance?</summary><p>No. It is not insurance and it does not pay claims.</p></details>
   <details class="faq"><summary>What if I hate the kit?</summary><p>60-Day Happy Pet Guarantee: full refund on the kit if you're not happy, no need to send it back.</p></details>
-  <details class="faq"><summary>How fast does it ship?</summary><p>Ships in 1-2 business days. Delivered in 3-7 business days (US). Free shipping on 2+ kits.</p></details>
+  <details class="faq"><summary>How fast does it ship?</summary><p>Ships in 1-2 business days. Delivered in 3-7 business days (US). Free US shipping.</p></details>
   <details class="faq"><summary>What does an ER visit often cost just to be seen?</summary><p>Emergency vet exam fees often run $100-$200+ before any treatment.</p></details>
   <p><a class="btn btn-cta" href="#checkout-form">Buy now</a></p>
 </section>
@@ -199,9 +212,9 @@
 </main>
 <div id="cart-drawer" class="drawer" hidden>
   <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Cart">
-    <h2>Cart · 0 items</h2>
-    <p>Your cart is empty. The Calm &amp; Safe Kit is purchased on the product page. Nothing is added here.</p>
-    <a class="btn btn-cta" href="product.html">Continue shopping</a>
+    <h2>Your cart</h2>
+    <div id="cart-lines"></div>
+    <button type="button" class="nl-atc" id="cart-checkout">Check out</button>
     <button type="button" class="btn btn-ghost" data-cart-close>Close</button>
   </div>
 </div>
